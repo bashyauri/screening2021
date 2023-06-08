@@ -17,6 +17,7 @@ use App\Models\ExamDetail;
 use App\Models\ExamGrade;
 use App\Models\Status;
 use App\Models\Course;
+use Exception;
 use Livewire\WithFileUploads;
 
 
@@ -29,7 +30,7 @@ class Profile extends Component
     public $states = '';
     public $lgas = '';
     public $departments = '';
-    public $courses=[];
+    public $courses = [];
     public $selectedCourse;
     public $profile;
 
@@ -86,7 +87,11 @@ class Profile extends Component
     //Subject Stuff
     public $subjectCount = 0;
     public $subjectDetails;
-    public $subjectName, $subjectGrade, $exam, $subjectId;
+    public $subjectId;
+    public $subjectName = [];
+    public $subjectGrade = [];
+    public $remainingSubjects = 0;
+    public $exam = [];
     //Course
     public $proposedCount = 0;
     public $proposedId;
@@ -103,17 +108,17 @@ class Profile extends Component
         $this->departments = Department::all();
         $this->courses = collect();
         $this->user = auth()->user()->account_id;
-        $this->fullName = auth()->user()->surname.' '. auth()->user()->firstname.' '. auth()->user()->m_name;
+        $this->fullName = auth()->user()->surname . ' ' . auth()->user()->firstname . ' ' . auth()->user()->m_name;
         $this->applications = Application::where(["account_id" => $this->user])->first();
 
 
 
-       $this->states = State::all();
+        $this->states = State::all();
 
-       $statuses= Status::where('account_id','=',$this->user)->first();
-       if(isset($statuses)){
-        $this->currentStep = $statuses->status;
-       }
+        $statuses = Status::where('account_id', '=', $this->user)->first();
+        if (isset($statuses)) {
+            $this->currentStep = $statuses->status;
+        }
 
 
 
@@ -123,7 +128,7 @@ class Profile extends Component
         $this->transaction = Transaction::where('account_id', '=', $this->user)
             ->where('resource', '=', 'Admission Screening Fees')
             ->where('use_status', '=', '(Not Used)')
-           ->where(function ($query) {
+            ->where(function ($query) {
                 $query->where('status', '01')
                     ->orWhere('status', '00');
             })->sole();
@@ -165,51 +170,52 @@ class Profile extends Component
             'kinName' => 'required',
             'kinGsm' => 'required|digits:11',
             'kinAddress' => 'required',
-           'passport' => 'required|mimes:jpg,jpeg|max:500'
+            'passport' => 'required|mimes:jpg,jpeg|max:500'
         ]);
 
         try {
-        $validatedData['passport'] = $this->passport->store('passports', 'public');
-        Application::updateOrCreate(
-            ['account_id'=>  auth()->user()->account_id],
-        [
-            'rrr_code' => $this->transaction->RRR,
-            'transactionId' => $this->transaction->transactionId,
-            'account_id' => $this->transaction->account_id,
-            'surname' => auth()->user()->surname,
-            'firstname' => auth()->user()->firstname,
-            'm_name' => auth()->user()->m_name,
-            'gender' => $this->gender,
-            'd_birth' => $this->dob,
-            'marital_status' => $this->maritalStatus,
-            'nationality' => strtoupper($this->nationality),
-            'stateid' => $this->selectedState,
-            'lgaid' => $this->selectedLga,
-            'home_town' => $this->homeTown,
-            'p_number' => auth()->user()->p_number,
-            'home_address' => $this->homeAddress,
-            'cor_address' => $this->correspondentAddress,
-            'sponsor' => $this->sponsor,
-            'nextkin_name' => $this->kinName,
-            'nextkin_gsm' => $this->kinGsm,
-            'nextkin_address' => $this->kinAddress,
-            'filename'=> $validatedData['passport']
-        ]);
+            $validatedData['passport'] = $this->passport->store('passports', 'public');
+            Application::updateOrCreate(
+                ['account_id' =>  auth()->user()->account_id],
+                [
+                    'rrr_code' => $this->transaction->RRR,
+                    'transactionId' => $this->transaction->transactionId,
+                    'account_id' => $this->transaction->account_id,
+                    'surname' => auth()->user()->surname,
+                    'firstname' => auth()->user()->firstname,
+                    'm_name' => auth()->user()->m_name,
+                    'gender' => $this->gender,
+                    'd_birth' => $this->dob,
+                    'marital_status' => $this->maritalStatus,
+                    'nationality' => strtoupper($this->nationality),
+                    'stateid' => $this->selectedState,
+                    'lgaid' => $this->selectedLga,
+                    'home_town' => $this->homeTown,
+                    'p_number' => auth()->user()->p_number,
+                    'home_address' => $this->homeAddress,
+                    'cor_address' => $this->correspondentAddress,
+                    'sponsor' => $this->sponsor,
+                    'nextkin_name' => $this->kinName,
+                    'nextkin_gsm' => $this->kinGsm,
+                    'nextkin_address' => $this->kinAddress,
+                    'filename' => $validatedData['passport']
+                ]
+            );
 
 
-        $this->deleteMsg = '';
-        $this->showSuccesNotification = false;
-        $this->showSuccesNotification = true;
-        $this->showSuccesNotification =  $this->user ? $this->successMsg ='Data Updated Successfully.' : $this->successMsg ='Data Added Successfully.';
+            $this->deleteMsg = '';
+            $this->showSuccesNotification = false;
+            $this->showSuccesNotification = true;
+            $this->showSuccesNotification =  $this->user ? $this->successMsg = 'Data Updated Successfully.' : $this->successMsg = 'Data Added Successfully.';
 
 
-        $this->clearForm();
+            $this->clearForm();
         } catch (Exception $e) {
             dd($e->getMessage());
         }
 
-       // $this->currentStep = 2;
-      //  $this->updateStatus( $this->currentStep);
+        // $this->currentStep = 2;
+        //  $this->updateStatus( $this->currentStep);
     }
 
     /**
@@ -218,118 +224,97 @@ class Profile extends Component
     public function firstStepSubmit()
     {
         $count = Application::where('account_id', $this->user)->count();
-        if($count > 0){
+        if ($count > 0) {
             $validatedData = $this->validate([
                 'status' => 'required',
             ]);
 
 
             $this->currentStep = 2;
-            $this->updateStatus( $this->currentStep);
-
-
-        }
-        else{
+            $this->updateStatus($this->currentStep);
+        } else {
             $this->successMsg = '';
-        $this->showSuccesNotification = false;
-        $this->deleteMsg = 'You have  not filled your Bio Data';
-        $this->showFailureNotification = true;
+            $this->showSuccesNotification = false;
+            $this->deleteMsg = 'You have  not filled your Bio Data';
+            $this->showFailureNotification = true;
         }
-
-
-
     }
     public function secondStepSubmit()
     {
-          $count = Institution::where('account_id', $this->user)->count();
+        $count = Institution::where('account_id', $this->user)->count();
 
-        if($count > 0){
+        if ($count > 0) {
             $validatedData = $this->validate([
                 'status' => 'required',
             ]);
 
 
             $this->currentStep = 3;
-            $this->updateStatus( $this->currentStep);
-
-
-        }
-        else{
+            $this->updateStatus($this->currentStep);
+        } else {
             $this->successMsg = '';
-        $this->showSuccesNotification = false;
-        $this->deleteMsg = 'You have  not filled your Institution Data';
-        $this->showFailureNotification = true;
+            $this->showSuccesNotification = false;
+            $this->deleteMsg = 'You have  not filled your Institution Data';
+            $this->showFailureNotification = true;
         }
-
-
     }
     public function thirdStepSubmit()
     {
-          $count = ExamDetail::where('account_id', $this->user)->count();
+        $count = ExamDetail::where('account_id', $this->user)->count();
 
-        if($count > 0){
+        if ($count > 0) {
             $validatedData = $this->validate([
                 'status' => 'required',
             ]);
 
 
             $this->currentStep = 4;
-            $this->updateStatus( $this->currentStep);
-
-
-        }
-        else{
+            $this->updateStatus($this->currentStep);
+        } else {
             $this->successMsg = '';
-        $this->showSuccesNotification = false;
-        $this->deleteMsg = 'You have  not filled your SSCE Details';
-        $this->showFailureNotification = true;
+            $this->showSuccesNotification = false;
+            $this->deleteMsg = 'You have  not filled your SSCE Details';
+            $this->showFailureNotification = true;
         }
     }
     public function fourthStepSubmit()
     {
-       $count = ExamGrade::where('account_id', $this->user)->count();
+        $count = ExamGrade::where('account_id', $this->user)->count();
 
-        if($count > 5){
+        if ($count > 5) {
             $validatedData = $this->validate([
                 'status' => 'required',
             ]);
 
 
             $this->currentStep = 5;
-            $this->updateStatus( $this->currentStep);
-
-
-        }
-        else{
+            $this->updateStatus($this->currentStep);
+        } else {
             $this->successMsg = '';
-        $this->showSuccesNotification = false;
-        $this->deleteMsg = 'You have  not select  the Min Subjects Required';
-        $this->showFailureNotification = true;
+            $this->showSuccesNotification = false;
+            $this->deleteMsg = 'You have  not select  the Min Subjects Required';
+            $this->showFailureNotification = true;
         }
     }
     public function fifthStepSubmit()
     {
-       $count = ProposedCourse::where('account_id', $this->user)->count();
-        if($count > 0){
+        $count = ProposedCourse::where('account_id', $this->user)->count();
+        if ($count > 0) {
             $validatedData = $this->validate([
                 'status' => 'required',
             ]);
 
 
             $this->currentStep = 6;
-            $this->updateStatus( $this->currentStep);
+            $this->updateStatus($this->currentStep);
             return redirect('print');
-
-        }
-        else{
+        } else {
 
             $this->successMsg = '';
-        $this->showSuccesNotification = false;
-        $this->deleteMsg = 'You have not select a course';
-        $this->showFailureNotification = true;
-
+            $this->showSuccesNotification = false;
+            $this->deleteMsg = 'You have not select a course';
+            $this->showFailureNotification = true;
         }
-
     }
 
     /**
@@ -359,7 +344,7 @@ class Profile extends Component
     }
     public function render()
     {
-        if(!empty($this->selectedDepartment)) {
+        if (!empty($this->selectedDepartment)) {
             $this->courses = Course::where('department_id', $this->selectedDepartment)->get();
         }
         $this->examDetails = ExamDetail::where(["account_id" => $this->user])->get();
@@ -367,16 +352,16 @@ class Profile extends Component
         $this->subjectDetails = ExamGrade::where(["account_id" => $this->user])->get();
         $this->applications = Application::where(["account_id" => $this->user])->first();
 
-       // $this->proposedDetails = ProposedCourse::where(["account_id" => $this->user])->first();
+        // $this->proposedDetails = ProposedCourse::where(["account_id" => $this->user])->first();
         //$this->courseDetails = Course::where(['id'=>$this->proposedDetails->course_id])->first();
         //$this->departmentDetails = Department::where(['id'=>$this->proposedDetails->department_id])->first();
 
 
 
-       // $this->proposedDetails = ProposedCourse::where(["account_id" => $this->user])->first();
+        // $this->proposedDetails = ProposedCourse::where(["account_id" => $this->user])->first();
         //$courseDetails = Course::where(['id'=>$this->proposedDetails->course_id])->first();
-       // $this->courseName = $courseDetails
-         $this->proposedDetails = ProposedCourse::where(["account_id" => $this->user])->get();
+        // $this->courseName = $courseDetails
+        $this->proposedDetails = ProposedCourse::where(["account_id" => $this->user])->get();
 
 
         return view('livewire.profile');
@@ -385,8 +370,7 @@ class Profile extends Component
     {
 
         if (!is_null($department)) {
-            $this->courses = Course::where('department_id',$department)->get();
-
+            $this->courses = Course::where('department_id', $department)->get();
         }
     }
     public function updatedSelectedState($state)
@@ -436,31 +420,31 @@ class Profile extends Component
 
             ]);
 
-            try{
+            try {
 
-            Institution::updateOrCreate(
-                [
+                Institution::updateOrCreate(
+                    [
 
-                    'id' => $this->institutionId
-                ],
-                [
-                    'account_id' => $this->user,
-                    'rrr_code' =>  $this->transaction->RRR,
-                    'sch_colle_name' => $this->institutionName,
-                    'certificate_obtained' => $this->certificate,
+                        'id' => $this->institutionId
+                    ],
+                    [
+                        'account_id' => $this->user,
+                        'rrr_code' =>  $this->transaction->RRR,
+                        'sch_colle_name' => $this->institutionName,
+                        'certificate_obtained' => $this->certificate,
 
-                    'start_date' => $this->startDate,
-                    'end_date' => $this->endDate
-                ]
-            );
+                        'start_date' => $this->startDate,
+                        'end_date' => $this->endDate
+                    ]
+                );
             } catch (Exception $e) {
-            dd($e->getMessage());
-        }
+                dd($e->getMessage());
+            }
 
             $this->deleteMsg = '';
             $this->showSuccesNotification = false;
             $this->showSuccesNotification = true;
-            $this->showSuccesNotification =  $this->institutionId ? $this->successMsg ='Data Updated Successfully.' : $this->successMsg ='Data Added Successfully.';
+            $this->showSuccesNotification =  $this->institutionId ? $this->successMsg = 'Data Updated Successfully.' : $this->successMsg = 'Data Added Successfully.';
         }
 
 
@@ -470,15 +454,15 @@ class Profile extends Component
     }
     public function edit($id)
     {
-        try{
+        try {
 
-        $institution = Institution::findOrFail($id);
-        $this->institutionId = $id;
-        $this->institutionName = $institution->sch_colle_name;
-        $this->certificate = $institution->certificate_obtained;
-        $this->startDate = $institution->start_date;
-      // $this->file_name = $validatedData['file_name'];
-        $this->endDate = $institution->end_date;
+            $institution = Institution::findOrFail($id);
+            $this->institutionId = $id;
+            $this->institutionName = $institution->sch_colle_name;
+            $this->certificate = $institution->certificate_obtained;
+            $this->startDate = $institution->start_date;
+            // $this->file_name = $validatedData['file_name'];
+            $this->endDate = $institution->end_date;
         } catch (Exception $e) {
             dd($e->getMessage());
         }
@@ -515,36 +499,36 @@ class Profile extends Component
             'examDate' => 'required|digits:4'
         ]);
         if ($count >= 2) {
-           // $this->successMsg = '';
+            // $this->successMsg = '';
             $this->showSuccesNotification = false;
             $this->showFailureNotification = true;
             $this->deleteMsg = 'Max no of SSCE Reached please delete an exam and try again';
         } else {
 
-            try{
-            $insert = ExamDetail::updateOrCreate(
-                [
+            try {
+                $insert = ExamDetail::updateOrCreate(
+                    [
 
-                    'id' => $this->examId,
+                        'id' => $this->examId,
 
-                ],
-                [
-                    'account_id' => $this->user,
-                    'rrr_code' =>  $this->transaction->RRR,
-                    'exam_name' => $this->examName,
-                    'exam_no' => $this->examNo,
-                    'exam_date' => $this->examDate
+                    ],
+                    [
+                        'account_id' => $this->user,
+                        'rrr_code' =>  $this->transaction->RRR,
+                        'exam_name' => $this->examName,
+                        'exam_no' => $this->examNo,
+                        'exam_date' => $this->examDate
 
-                ]
-            );
+                    ]
+                );
             } catch (Exception $e) {
-            dd($e->getMessage());
-        }
-           // dd($insert);
-           $this->deleteMsg = '';
-           $this->showFailureNotification = false;
+                dd($e->getMessage());
+            }
+            // dd($insert);
+            $this->deleteMsg = '';
+            $this->showFailureNotification = false;
             $this->showSuccesNotification = true;
-            $this->showSuccesNotification =  $this->examId ? $this->successMsg ='Data Updated Successfully.' : $this->successMsg ='Data Added Successfully.';
+            $this->showSuccesNotification =  $this->examId ? $this->successMsg = 'Data Updated Successfully.' : $this->successMsg = 'Data Added Successfully.';
         }
 
 
@@ -554,15 +538,15 @@ class Profile extends Component
     }
     public function editExam($id)
     {
-        try{
-        $examType = ExamDetail::findOrFail($id);
-     $this->examId = $id;
-        $this->examName = $examType->exam_name;
-        $this->examNo = $examType->exam_no;
-        $this->examDate = $examType->exam_date;
+        try {
+            $examType = ExamDetail::findOrFail($id);
+            $this->examId = $id;
+            $this->examName = $examType->exam_name;
+            $this->examNo = $examType->exam_no;
+            $this->examDate = $examType->exam_date;
 
 
-        $this->openModal();
+            $this->openModal();
         } catch (Exception $e) {
             dd($e->getMessage());
         }
@@ -574,11 +558,12 @@ class Profile extends Component
         $this->showSuccesNotification = false;
         $this->deleteMsg = 'Data Removed Successfully';
         $this->showFailureNotification = true;
-
     }
     //Subjects
     public function createSubject()
     {
+        $count = ExamGrade::where('account_id', $this->user)->count();
+        $this->remainingSubjects = 9 - $count;
         $this->resetSubjectFields();
         $this->openModal();
     }
@@ -600,48 +585,53 @@ class Profile extends Component
             $this->showFailureNotification = true;
         } else {
             $this->validate([
-                'subjectName' => 'required',
-                'exam' => 'required',
-                'subjectGrade' => 'required'
+                'subjectName.*' => 'required',
+                'exam.*' => 'required',
+                'subjectGrade.*' => 'required'
             ]);
-            try{
-
-            ExamGrade::updateOrCreate(
-                [
-
-                    'id' => $this->subjectId
-                ],
-                [
-                    'account_id' => $this->user,
-                    'subject_name' => $this->subjectName,
-                    'rrr_code' =>  $this->transaction->RRR,
-                    'grade' => $this->subjectGrade,
-                    'exam_name' => $this->exam
 
 
-                ]
-            );
+
+            try {
+                for ($i = 0; $i < count($this->subjectName) && $i < 9 - $count; $i++) {
+                    ExamGrade::updateOrCreate(
+                        [
+                            'id' => $this->subjectId
+                        ],
+                        [
+                            'account_id' => $this->user,
+                            'subject_name' => $this->subjectName[$i],
+                            'rrr_code' => $this->transaction->RRR,
+                            'grade' => $this->subjectGrade[$i],
+                            'exam_name' => $this->exam[$i]
+                        ]
+                    );
+                }
             } catch (Exception $e) {
-            dd($e->getMessage());
-        }
+                dd($e->getMessage());
+            }
+
             $this->deleteMsg = '';
             $this->showFailureNotification = false;
             $this->showSuccesNotification = true;
-            $this->showSuccesNotification =  $this->subjectId ? $this->successMsg ='Data Updated Successfully.' : $this->successMsg ='Data Added Successfully.';
+            $this->successMsg = $this->subjectId ? 'Data Updated Successfully.' : 'Data Added Successfully.';
         }
+
         $this->closeModal();
         $this->resetSubjectFields();
     }
 
+
+
     public function deleteSubject($id)
     {
-        try{
-        ExamGrade::find($id)->delete();
+        try {
+            ExamGrade::find($id)->delete();
 
-        $this->successMsg = '';
-          $this->showSuccesNotification = false;
-        $this->deleteMsg = 'Data Removed Successfully';
-        $this->showFailureNotification = true;
+            $this->successMsg = '';
+            $this->showSuccesNotification = false;
+            $this->deleteMsg = 'Data Removed Successfully';
+            $this->showFailureNotification = true;
         } catch (Exception $e) {
             dd($e->getMessage());
         }
@@ -653,7 +643,6 @@ class Profile extends Component
         $this->gradeObtained = '';
         $this->selectedCourse = '';
         $this->selectedDepartment = '';
-
     }
     public function createCourse()
     {
@@ -663,69 +652,67 @@ class Profile extends Component
 
     public function addCourse()
     {
-         try {
-        $count = ProposedCourse::where('account_id', $this->user)->count();
-        $validatedData =$this->validate([
-            'jambFile' => 'required|mimes:jpeg,jpg|max:500',
-            'gradeObtained' => 'required',
-            'selectedDepartment' => 'required',
-            'selectedCourse' => 'required',
+        try {
+            $count = ProposedCourse::where('account_id', $this->user)->count();
+            $validatedData = $this->validate([
+                'jambFile' => 'required|mimes:jpeg,jpg|max:500',
+                'gradeObtained' => 'required',
+                'selectedDepartment' => 'required',
+                'selectedCourse' => 'required',
 
-        ]);
-        $validatedData['jambFile'] = $this->jambFile->store('documents', 'public');
-        if ($count > 1) {
-            $this->successMsg = '';
-            $this->showSuccesNotification = false;
-            $this->deleteMsg = 'You are to select only one course';
-            $this->showFailureNotification = true;
-        } else {
+            ]);
+            $validatedData['jambFile'] = $this->jambFile->store('documents', 'public');
+            if ($count > 1) {
+                $this->successMsg = '';
+                $this->showSuccesNotification = false;
+                $this->deleteMsg = 'You are to select only one course';
+                $this->showFailureNotification = true;
+            } else {
 
-            ProposedCourse::updateOrCreate(
-                [
+                ProposedCourse::updateOrCreate(
+                    [
 
-                    'account_id' => $this->user
-                ],
-                [
-                    'account_id' => $this->user,
-                    'rrr_code' =>  $this->transaction->RRR,
-                    'jamb_file' => $validatedData['jambFile'],
-                    'score' => $this->gradeObtained,
-                    'department_id' => $this->selectedDepartment,
-                    'course_id' => $this->selectedCourse,
+                        'account_id' => $this->user
+                    ],
+                    [
+                        'account_id' => $this->user,
+                        'rrr_code' =>  $this->transaction->RRR,
+                        'jamb_file' => $validatedData['jambFile'],
+                        'score' => $this->gradeObtained,
+                        'department_id' => $this->selectedDepartment,
+                        'course_id' => $this->selectedCourse,
 
 
-                ]
-            );
-            $this->deleteMsg = '';
-            $this->showFailureNotification = false;
-            $this->showSuccesNotification = true;
-            $this->showSuccesNotification =  $this->proposedId ? $this->successMsg ='Data Updated Successfully.' : $this->successMsg ='Data Added Successfully.';
-
-        }
-
+                    ]
+                );
+                $this->deleteMsg = '';
+                $this->showFailureNotification = false;
+                $this->showSuccesNotification = true;
+                $this->showSuccesNotification =  $this->proposedId ? $this->successMsg = 'Data Updated Successfully.' : $this->successMsg = 'Data Added Successfully.';
+            }
 
 
 
-        $this->closeModal();
-        $this->resetCourseFields();
-         } catch (Exception $e) {
+
+            $this->closeModal();
+            $this->resetCourseFields();
+        } catch (Exception $e) {
             dd($e->getMessage());
         }
     }
     public function editCourse($id)
     {
-        try
-        {
-        $proposedDetails = ProposedCourse::find($id);
-        $this->proposedId = $id;
-        //$this->jambFile = $proposedDetails->jamb_file;
-        $this->gradeObtained = $proposedDetails->score;
-        $this->selectedDepartment = $proposedDetails->department_id;
-        $this->selectedCourse = $proposedDetails->course_id;
+        try {
+            $proposedDetails = ProposedCourse::find($id);
+            $this->proposedId = $id;
+            //$this->jambFile = $proposedDetails->jamb_file;
+            $this->gradeObtained = $proposedDetails->score;
+            $this->selectedDepartment = $proposedDetails->department_id;
+            $this->selectedCourse = $proposedDetails->course_id;
 
 
 
-        $this->openModal();
+            $this->openModal();
         } catch (Exception $e) {
             dd($e->getMessage());
         }
@@ -738,23 +725,22 @@ class Profile extends Component
         $this->deleteMsg = 'Data Removed Successfully';
         $this->showFailureNotification = true;
     }
-    public function updateStatus($status){
-          try {
-        Status::updateOrCreate(
-            [
+    public function updateStatus($status)
+    {
+        try {
+            Status::updateOrCreate(
+                [
 
-                'account_id' => $this->user
-            ],
-            [
-                'status' => $status
+                    'account_id' => $this->user
+                ],
+                [
+                    'status' => $status
 
 
-            ]
+                ]
             );
-          } catch (Exception $e) {
+        } catch (Exception $e) {
             dd($e->getMessage());
         }
-
-
     }
 }
