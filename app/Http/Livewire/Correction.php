@@ -41,7 +41,7 @@ class Correction extends Component
                     'account_id' => auth()->user()->account_id,
                 ],
                 [
-                    'status' => 1
+                    'status' => 5
 
 
                 ]
