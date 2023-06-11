@@ -31,7 +31,7 @@ class Billing extends Component
         $this->date = DATE("d/m/Y");
         $this->transactionId = strtoupper($transcId);
         $this->status = '00';
-        $this->amount = '2000';
+        $this->amount = '2500';
         $this->session = ' 2023/2024';
 
         $this->results = Transaction::where([
