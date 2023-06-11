@@ -43,10 +43,10 @@ class Profile extends Component
     public $gender;
     public $maritalStatus;
     public $dob;
-    public $nationality;
+    public $nationality = '';
     public $phone;
     public $selectedLga;
-    public $homeTown;
+    public $homeTown = '';
     public $homeAddress;
     public $correspondentAddress;
     public $sponsor;
@@ -110,6 +110,21 @@ class Profile extends Component
         $this->user = auth()->user()->account_id;
         $this->fullName = auth()->user()->surname . ' ' . auth()->user()->firstname . ' ' . auth()->user()->m_name;
         $this->applications = Application::where(["account_id" => $this->user])->first();
+        // dd($this->applications->nationality);
+        if ($this->applications) {
+
+            $this->gender = $this->applications->gender;
+            $this->nationality = $this->applications->nationality;
+            $this->homeTown = $this->applications->home_town;
+            $this->dob = $this->applications->d_birth;
+            $this->homeAddress = $this->applications->home_address;
+            $this->correspondentAddress = $this->applications->cor_address;
+            $this->sponsor = $this->applications->sponsor;
+            $this->kinName = $this->applications->nextkin_name;
+            $this->kinGsm = $this->applications->nextkin_gsm;
+            $this->kinAddress = $this->applications->nextkin_address;
+        }
+
 
 
 
@@ -198,6 +213,7 @@ class Profile extends Component
                     'nextkin_name' => $this->kinName,
                     'nextkin_gsm' => $this->kinGsm,
                     'nextkin_address' => $this->kinAddress,
+
                     'filename' => $validatedData['passport']
                 ]
             );
