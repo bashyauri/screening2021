@@ -4,47 +4,49 @@
 <head>
 
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
 
-<link id="pagestyle" href="../assets/css/soft-ui-dashboard.css" rel="stylesheet" />
-<link href="../assets/css/form-wizard.css" rel="stylesheet" />
-<style type="text/css">
-    body {
-        /*padding: 2% 1% 2% 1%;
+    <link id="pagestyle" href="../assets/css/soft-ui-dashboard.css" rel="stylesheet" />
+    <link href="../assets/css/form-wizard.css" rel="stylesheet" />
+    <style type="text/css">
+        body {
+            /*padding: 2% 1% 2% 1%;
   color: #111111;
     background-image:url(image/bg2.jpg);
     background-repeat:repeat;
          width: 210mm;
          height: 297mm;*/
-        margin-left: auto;
-        margin-right: auto;
-        padding: 0px;;
-        color: #111111;
-        background-image: url(image/bg2.jpg);
-        background-repeat: repeat;
-    }
-
-</style>
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0px;
+            ;
+            color: #111111;
+            background-image: url(image/bg2.jpg);
+            background-repeat: repeat;
+        }
+    </style>
 </head>
-<body>
-    <div class="main"
-      >
 
-                 <div class="top-container container-fluid border-bottom border-dark row">
+<body>
+    <div class="main">
+
+        <div class="top-container container-fluid border-bottom border-dark row">
             <div class="log0-container col-2 border-right border-dark text-center mb-3 mt-3">
-                    <img src="{{asset('assets/img/logos/logo.jpg')}}" alt="logo-image"  height = "100px"/>
+                <img src="{{ asset('assets/img/logos/logo.jpg') }}" alt="logo-image" height="100px" />
             </div>
 
             <div class="top-container-title col-8 text-center">
-                <h5 class="mb-4 font-weight-bolder" >WAZIRI UMARU FEDERAL POLYTECHNIC, BIRNIN KEBBI</h5>
+                <h5 class="mb-4 font-weight-bolder">WAZIRI UMARU FEDERAL POLYTECHNIC, BIRNIN KEBBI</h5>
                 <h5 class="mb-4 font-weight-bold">ADMISSION SCREENING FORM</h5>
-                <h6 class = "font-weight-bold">2021/2022 ACADEMIC SESSION </h6>
+                <h6 class="font-weight-bold">2023/2024 ACADEMIC SESSION </h6>
             </div>
 
             <div class="log0-container col-2 border-left border-dark text-center mb-3 p-3">
 
-                    {!! QrCode::size(100)->generate($fullName.' Remita:'.$rrr) !!}
+                {!! QrCode::size(100)->generate($fullName . ' Remita:' . $rrr) !!}
 
             </div>
         </div>
@@ -81,7 +83,8 @@
                             <tbody>
                                 <tr>
                                     <th>Application Number</th>
-                                    <td rowspan="4"><img src ="{{config('store.PATH').$passport }}"width = 200 height =200></td>
+                                    <td rowspan="4"><img src="{{ asset('storage/' . $passport) }}" alt="..."
+                                            height="200" width="200"></td>
                                 </tr>
                                 <tr>
                                     <td><Strong>{{ $accountId }}</Strong></td>
@@ -98,13 +101,13 @@
                     </div>
                 </div>
                 <div class="row-fluid" style="padding-right:4px">
-                    <div  >
+                    <div>
                         <table class="table table-condensed">
                             <h4><Strong>SECTION A: PERSONAL DETAILS</Strong></h4>
                             <tbody>
                                 <tr>
-                                    <th >Name in Full: </th>
-                                    <td style="width:15%;">{{$fullName}}</td>
+                                    <th>Name in Full: </th>
+                                    <td style="width:15%;">{{ $fullName }}</td>
                                     <th style="width:20%;">Date of Birth:</th>
                                     <td>{{ $dob }}</td>
                                     <th style="width:20%;">Gender:</th>
@@ -118,7 +121,7 @@
 
 
                                     <td>{{ $lga }}</td>
-                                    <th >State of Origin:</th>
+                                    <th>State of Origin:</th>
                                     <td>{{ $state }}</td>
                                 </tr>
                                 <tr>
@@ -180,7 +183,6 @@
 
 
                             @foreach ($institutions as $institution)
-
                                 <tr>
                                     <td>{{ $count = $count + 1 }}</td>
                                     <td>{{ $institution->sch_colle_name }}</td>
@@ -203,8 +205,6 @@
                                 <th colspan="2">Exam Number</th>
                                 <th colspan="2">Exam Date</th>
                                 @foreach ($exams as $exam)
-
-
                             </tr>
                             <tr>
                                 <td colspan="2">{{ $exam->exam_name }}</td>
@@ -212,7 +212,6 @@
                                 <td colspan="2">{{ $exam->exam_date }}</td>
 
                             </tr>
-
                             @endforeach
                             <tr>
                                 <th>S/N</th>
@@ -309,12 +308,16 @@
 
                             <tr>
                                 <th>S/N</th>
-                                <th colspan="3"><h4> Course of Study</h4></th>
+                                <th colspan="3">
+                                    <h4> Course of Study</h4>
+                                </th>
 
                             </tr>
                             <tr>
                                 <td>{{ 1 }}</td>
-                                <td colspan="3"><h6>{{ $course }}</h6></td>
+                                <td colspan="3">
+                                    <h6>{{ $course }}</h6>
+                                </td>
 
                             </tr>
 
@@ -341,4 +344,5 @@
 <script>
     window.print();
 </script>
+
 </html>
