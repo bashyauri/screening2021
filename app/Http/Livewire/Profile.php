@@ -105,7 +105,7 @@ class Profile extends Component
     public function mount()
     {
 
-        $this->departments = Department::all();
+        $this->departments = Department::where(['pro_id' => auth()->user()->programme_id])->get();
         $this->courses = collect();
         $this->user = auth()->user()->account_id;
         $this->fullName = auth()->user()->surname . ' ' . auth()->user()->firstname . ' ' . auth()->user()->m_name;
@@ -652,7 +652,9 @@ class Profile extends Component
 
     public function addCourse()
     {
+
         try {
+
             $count = ProposedCourse::where('account_id', $this->user)->count();
             $validatedData = $this->validate([
                 'jambFile' => 'required|mimes:jpeg,jpg|max:500',
@@ -661,6 +663,7 @@ class Profile extends Component
                 'selectedCourse' => 'required',
 
             ]);
+
             $validatedData['jambFile'] = $this->jambFile->store('documents', 'public');
             if ($count > 1) {
                 $this->successMsg = '';
@@ -677,7 +680,7 @@ class Profile extends Component
                     [
                         'account_id' => $this->user,
                         'rrr_code' =>  $this->transaction->RRR,
-                        'jamb_file' => $validatedData['jambFile'],
+                        'jamb_file' => $validatedData['jambFile'] ? $validatedData['jambFile'] : ProposedCourse::where('account_id', $this->user)->first()->jamb_file,
                         'score' => $this->gradeObtained,
                         'department_id' => $this->selectedDepartment,
                         'course_id' => $this->selectedCourse,
@@ -702,19 +705,27 @@ class Profile extends Component
     }
     public function editCourse($id)
     {
-        try {
-            $proposedDetails = ProposedCourse::find($id);
-            $this->proposedId = $id;
-            //$this->jambFile = $proposedDetails->jamb_file;
-            $this->gradeObtained = $proposedDetails->score;
-            $this->selectedDepartment = $proposedDetails->department_id;
-            $this->selectedCourse = $proposedDetails->course_id;
+        if (Application::where(['account_id' => auth()->user()->account_id, 'remark' => null])->exists()) {
+
+            try {
+                $proposedDetails = ProposedCourse::find($id);
+                $this->proposedId = $id;
+                //$this->jambFile = $proposedDetails->jamb_file;
+                $this->gradeObtained = $proposedDetails->score;
+                $this->selectedDepartment = $proposedDetails->department_id;
+                $this->selectedCourse = $proposedDetails->course_id;
 
 
 
-            $this->openModal();
-        } catch (Exception $e) {
-            dd($e->getMessage());
+                $this->openModal();
+            } catch (Exception $e) {
+                dd($e->getMessage());
+            }
+        } else {
+            $this->successMsg = '';
+            $this->showSuccesNotification = false;
+            $this->deleteMsg = 'You are already selected ! You cannot edit your course any more  ';
+            $this->showFailureNotification = true;
         }
     }
     public function deleteCourse($id)
