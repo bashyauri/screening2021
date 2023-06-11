@@ -209,13 +209,13 @@
                                 </div>
                             </div>
                         </div>
-                        <form wire:submit.prevent="addBio" action="#" method="POST" method="POST"
+                        <form wire:submit.prevent="addBio" action="#" method="POST"
                             enctype="multipart/form-data" role="form text-left">
                             @csrf
 
                             <div class="col-lg-4 col-md-4">
                                 <div class="form-group">
-                                    @if ($passport)
+                                    @if ($passport && is_object($passport))
                                         Passport Preview:
                                         <img src="{{ $passport->temporaryUrl() }}" width="200" height="200">
                                     @endif
@@ -240,10 +240,7 @@
                                     <div class="form-group">
                                         <label for="gender">Gender:</label>
                                         <select wire:model="gender" class="form-control form-select" list="gender">
-                                            @isset($applications->gender)
-                                                <option value="{{ $applications->gender }}" selected>
-                                                    {{ $applications->gender }}</option>
-                                            @endisset
+
                                             <option value="" selected>Select</option>
                                             <option value="male">Male</option>
                                             <option value="female">Female</option>
@@ -258,9 +255,7 @@
                                     <div class="form-group">
                                         <label for="dob">DOB:</label>
 
-                                        <input wire:model="dob"
-                                            value="{{ isset($applications->dob) ? $applications->dob : '' }}"
-                                            id="dob" type="text" value="{{ $dob }}"
+                                        <input wire:model.dob="dob" id="dob" type="text"
                                             class="form-control" placeholder="Select Date" />
 
 
