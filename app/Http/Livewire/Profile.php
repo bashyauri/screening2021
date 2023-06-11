@@ -57,7 +57,7 @@ class Profile extends Component
     public $kinGsm;
     public $kinAddress;
     public $transaction;
-    public $passport;
+    public $passport = null;
     public $fullName;
     public $path;
     public $applications = '';
@@ -115,7 +115,7 @@ class Profile extends Component
         $this->applications = Application::where(["account_id" => $this->user])->first();
         // dd($this->applications->nationality);
         if ($this->applications) {
-            $this->passport = $this->applications->filename;
+            // $this->passport = $this->applications->filename;
             $this->gender = $this->applications->gender;
             $this->nationality = $this->applications->nationality;
             $this->homeTown = $this->applications->home_town;
@@ -178,8 +178,7 @@ class Profile extends Component
     {
 
 
-        $validatedData = $this->validate([
-
+        $rules = [
             'gender' => 'required',
             'dob' => 'required',
             'nationality' => 'required',
@@ -192,64 +191,69 @@ class Profile extends Component
             'kinName' => 'required',
             'kinGsm' => 'required|digits:11',
             'kinAddress' => 'required',
-            'passport' => 'required|max:500|mimes:jpeg,jpg,png'
 
 
+        ];
+        if (empty($this->applications->filename)) {
 
-        ]);
+            // If filename is empty, make the passport field required with file validation rules
+            $rules['passport'] = 'required|max:500|mimes:jpeg,jpg,png';
+        } else {
 
+
+            $rules['passport'] = 'nullable|max:500|mimes:jpeg,jpg,png';
+        }
+
+        $validatedData = $this->validate($rules);
 
         try {
+            $applicationData = [
+                'rrr_code' => $this->transaction->RRR,
+                'transactionId' => $this->transaction->transactionId,
+                'account_id' => $this->transaction->account_id,
+                'surname' => auth()->user()->surname,
+                'firstname' => auth()->user()->firstname,
+                'm_name' => auth()->user()->m_name,
+                'gender' => $this->gender,
+                'd_birth' => $this->dob,
+                'marital_status' => $this->maritalStatus,
+                'nationality' => strtoupper($this->nationality),
+                'stateid' => $this->selectedState,
+                'lgaid' => $this->selectedLga,
+                'home_town' => $this->homeTown,
+                'p_number' => auth()->user()->p_number,
+                'home_address' => $this->homeAddress,
+                'cor_address' => $this->correspondentAddress,
+                'sponsor' => $this->sponsor,
+                'nextkin_name' => $this->kinName,
+                'nextkin_gsm' => $this->kinGsm,
+                'nextkin_address' => $this->kinAddress,
+
+            ];
 
 
-            $validatedData['passport'] = $this->passport->store('passports', 'public');
+            // Check if filename field is empty in the database
+            if (empty($this->applications->filename) && !$this->passport) {
+                throw new \Exception('The passport field is required.');
+            }
 
-
+            if ($this->passport) {
+                $applicationData['filename'] = $this->passport->store('passports', 'public');
+            }
 
             Application::updateOrCreate(
-                ['account_id' =>  auth()->user()->account_id],
-                [
-                    'rrr_code' => $this->transaction->RRR,
-                    'transactionId' => $this->transaction->transactionId,
-                    'account_id' => $this->transaction->account_id,
-                    'surname' => auth()->user()->surname,
-                    'firstname' => auth()->user()->firstname,
-                    'm_name' => auth()->user()->m_name,
-                    'gender' => $this->gender,
-                    'd_birth' => $this->dob,
-                    'marital_status' => $this->maritalStatus,
-                    'nationality' => strtoupper($this->nationality),
-                    'stateid' => $this->selectedState,
-                    'lgaid' => $this->selectedLga,
-                    'home_town' => $this->homeTown,
-                    'p_number' => auth()->user()->p_number,
-                    'home_address' => $this->homeAddress,
-                    'cor_address' => $this->correspondentAddress,
-                    'sponsor' => $this->sponsor,
-                    'nextkin_name' => $this->kinName,
-                    'nextkin_gsm' => $this->kinGsm,
-                    'nextkin_address' => $this->kinAddress,
-
-                    'filename' =>  $validatedData['passport'],
-                ]
+                ['account_id' => auth()->user()->account_id],
+                $applicationData
             );
-
-
             $this->deleteMsg = '';
             $this->showSuccesNotification = false;
             $this->showSuccesNotification = true;
             $this->showSuccesNotification =  $this->user ? $this->successMsg = 'Data Updated Successfully.' : $this->successMsg = 'Data Added Successfully.';
-
-
-            $this->clearForm();
+            // Rest of the code
         } catch (Exception $e) {
             dd($e->getMessage());
         }
-
-        // $this->currentStep = 2;
-        //  $this->updateStatus( $this->currentStep);
     }
-
     /**
      * Write code on Method
      */
