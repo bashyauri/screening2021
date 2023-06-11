@@ -13,7 +13,6 @@
                 <div class="col-auto">
                     <div class="avatar avatar-xl position-relative">
                         @if (!empty($applications))
-
                             <img src="{{ asset('storage/' . $applications->filename) }}" alt="..."
                                 class="w-100 border-radius-lg shadow-sm">
                         @else
@@ -242,7 +241,8 @@
                                         <label for="gender">Gender:</label>
                                         <select wire:model="gender" class="form-control form-select" list="gender">
                                             @isset($applications->gender)
-                                                <option value="{{$applications->gender}}" selected>{{$applications->gender}}</option>
+                                                <option value="{{ $applications->gender }}" selected>
+                                                    {{ $applications->gender }}</option>
                                             @endisset
                                             <option value="" selected>Select</option>
                                             <option value="male">Male</option>
@@ -258,7 +258,10 @@
                                     <div class="form-group">
                                         <label for="dob">DOB:</label>
 
-                                        <input wire:model="dob" value="{{ isset($applications->dob) ? $applications->dob : '' }}" id="dob" type="text" class="form-control" placeholder="Select Date" />
+                                        <input wire:model="dob"
+                                            value="{{ isset($applications->dob) ? $applications->dob : '' }}"
+                                            id="dob" type="text" value="{{ $dob }}"
+                                            class="form-control" placeholder="Select Date" />
 
 
                                         @error('dob')
@@ -274,7 +277,12 @@
                                     <div class="form-group ">
                                         <label for="maritalStatus">Marital Status:</label>
                                         <select wire:model="maritalStatus" class="form-control form-select">
+                                            @isset($applications->marital_status)
+                                                <option value="{{ $applications->marital_status }}" selected>
+                                                    {{ $applications->marital_status }}</option>
+                                            @endisset
                                             <option>Select</option>
+
                                             <option value="single">Single</option>
                                             <option value="married">Married</option>
                                         </select>
@@ -288,6 +296,10 @@
                                     <div class="form-group">
                                         <label for="nationality">Nationality:</label>
                                         <select wire:model="nationality" class="form-control form-select">
+                                            @isset($applications->nationality)
+                                                <option value="{{ $applications->nationality }}" selected>
+                                                    {{ $applications->nationality }}</option>
+                                            @endisset
                                             <option>Select</option>
                                             <option value="nigerian">Nigerian</option>
                                             <option value="non nigerian">Non Nigerian</option>
@@ -306,6 +318,10 @@
                                     <div class="form-group">
                                         <label for="state">States:</label>
                                         <select wire:model="selectedState" class="form-control">
+                                            @isset($applications->state->name)
+                                                <option value="{{ $applications->state->name }}" selected>
+                                                    {{ $applications->state->name }}</option>
+                                            @endisset
                                             <option value="" selected>Choose state</option>
                                             @foreach ($states as $state)
                                                 <option value="{{ $state->id }}">{{ $state->name }}</option>
@@ -313,11 +329,16 @@
                                         </select>
                                     </div>
                                 </div>
-                                @if (!is_null($selectedState))
+
+                                @if (!is_null($selectedState) || $applications->lga->name)
                                     <div class="col-md-4 col-sm-4">
                                         <div class="form-group">
                                             <label for="lga">LGA:</label>
                                             <select wire:model="selectedLga" class="form-control">
+                                                @isset($applications->lga->name)
+                                                    <option value="{{ $applications->lga->name }}" selected>
+                                                        {{ $applications->lga->name }}</option>
+                                                @endisset
                                                 <option value="" selected>Choose LGA</option>
                                                 @foreach ($lgas as $lga)
                                                     <option value="{{ $lga->id }}">{{ $lga->name }}
@@ -330,12 +351,15 @@
                                 <div class="col-md-4 col-sm-4">
                                     <div class="form-group">
                                         <label for="homeTown">Home Town:</label>
-                                        <input type="text" wire:model.lazy="homeTown" class="form-control" />
+                                        <input type="text" wire:model.lazy="homeTown"
+                                            value="{{ old('homeTown', $applications->home_town ?? '') }}"
+                                            class="form-control" />
                                         @error('homeTown')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
+
                             </div>
                             <div class="row setup-content {{ $currentStep != 1 ? 'display-none' : '' }}"
                                 id="step-1">
@@ -344,7 +368,7 @@
                                         <label for="homeAddress"
                                             class="form-control-label">{{ 'Home Address:' }}</label>
 
-                                        <textarea wire:model.lazy="homeAddress" class="form-control" rows="3" placeholder="Home Address"></textarea>
+                                        <textarea wire:model.lazy="homeAddress" class="form-control" rows="3" placeholder="Home Address">{{ old('homeAddress', $homeAddress ?? '') }}"</textarea>
 
                                         @error('homeAddress')
                                             <div class="text-danger">{{ $message }}
