@@ -6,7 +6,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Lga;
 use App\Models\State;
-use App\Models\User;
+use Illuminate\Validation\Rule;
 use App\Models\Transaction;
 use App\Models\Programme;
 use App\Models\Application;
@@ -17,7 +17,9 @@ use App\Models\ExamDetail;
 use App\Models\ExamGrade;
 use App\Models\Status;
 use App\Models\Course;
+use App\Rules\ImageNotRequiredIfFilenameExists;
 use Exception;
+
 use Livewire\WithFileUploads;
 
 
@@ -33,6 +35,7 @@ class Profile extends Component
     public $courses = [];
     public $selectedCourse;
     public $profile;
+    public $pic;
 
     public $selectedState = NULL;
     public $selectedDepartment = NULL;
@@ -112,12 +115,15 @@ class Profile extends Component
         $this->applications = Application::where(["account_id" => $this->user])->first();
         // dd($this->applications->nationality);
         if ($this->applications) {
-
+            $this->passport = $this->applications->filename;
             $this->gender = $this->applications->gender;
             $this->nationality = $this->applications->nationality;
             $this->homeTown = $this->applications->home_town;
+            $this->maritalStatus = $this->applications->marital_status;
             $this->dob = $this->applications->d_birth;
             $this->homeAddress = $this->applications->home_address;
+            $this->selectedLga = $this->applications->lgaid;
+            $this->selectedState = $this->applications->stateid;
             $this->correspondentAddress = $this->applications->cor_address;
             $this->sponsor = $this->applications->sponsor;
             $this->kinName = $this->applications->nextkin_name;
@@ -171,6 +177,7 @@ class Profile extends Component
     public function addBio()
     {
 
+
         $validatedData = $this->validate([
 
             'gender' => 'required',
@@ -185,11 +192,20 @@ class Profile extends Component
             'kinName' => 'required',
             'kinGsm' => 'required|digits:11',
             'kinAddress' => 'required',
-            'passport' => 'required|mimes:jpg,jpeg|max:500'
+            'passport' => 'required|max:500|mimes:jpeg,jpg,png'
+
+
+
         ]);
 
+
         try {
+
+
             $validatedData['passport'] = $this->passport->store('passports', 'public');
+
+
+
             Application::updateOrCreate(
                 ['account_id' =>  auth()->user()->account_id],
                 [
@@ -214,7 +230,7 @@ class Profile extends Component
                     'nextkin_gsm' => $this->kinGsm,
                     'nextkin_address' => $this->kinAddress,
 
-                    'filename' => $validatedData['passport']
+                    'filename' =>  $validatedData['passport'],
                 ]
             );
 
