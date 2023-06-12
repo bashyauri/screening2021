@@ -41,7 +41,7 @@
  */
 
     h1 {
-        font-size: 2em;
+        font-size: 1.5em;
         margin: 0.67em 0;
     }
 
@@ -484,7 +484,6 @@
         height: 1px;
         width: 17rem;
     }
-
 </style>
 <!DOCTYPE html>
 <html lang="en">
@@ -501,8 +500,8 @@
 <body>
     <div class="offer">
         <div class="logo-div">
-            <div class="logo-img"><img src="{{ asset('assets/img/logos/logo.jpg') }}" alt="logo-image"
-                    height="100px" /></div>
+            <div class="logo-img"><img src="{{ asset('assets/img/logos/logo.jpg') }}" alt="logo-image" height="100px" />
+            </div>
             <div class="logo-text">
                 <h2 class="">WAZIRI UMARU FEDERAL POLYTECHNIC</h2>
                 <h3>OFFICE OF THE REGISTRAR</h3>
@@ -524,7 +523,7 @@
         </div>
         <section>
             <header>
-                <h4>PROVISIONAL OFFER OF ADMISSION {{date('Y')-1}}/{{date('Y')}} ACADEMIC SESSION</h4>
+                <h4>PROVISIONAL OFFER OF ADMISSION {{ date('Y') - 1 }}/{{ date('Y') }} ACADEMIC SESSION</h4>
             </header>
             <article>
                 <p>This is to inform you that you have being offered provisional offer admission into the</p>
@@ -534,7 +533,7 @@
                 <p><span>Department: </span>{{ $department }}
                 </p>
 
-                <p><span>Duration:</span>  {{ $appliedProgram == 1 ? 2 : 3 }}
+                <p><span>Duration:</span> {{ auth()->user()->programme_id == 1 ? 2 : 3 }}
                     years
                 </p>
                 <ol>
