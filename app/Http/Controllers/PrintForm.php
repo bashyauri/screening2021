@@ -93,7 +93,7 @@ class PrintForm extends Controller
         $applicationDetails = Application::where('account_id', '=', $user)->sole();
         $lga = Lga::where('id', '=', $applicationDetails->lgaid)->first();
         $state = State::where('id', '=', $applicationDetails->stateid)->first();
-        $program = Programme::where('id', '=', $applicationDetails->programme_id)->first();
+        $program = Programme::where('id', '=', auth()->user()->programme_id)->first();
         $proposedCourse = ProposedCourse::where('account_id', '=', $user)->sole();
         $courses = Course::where('id', '=', $proposedCourse->course_id)->first();
         $departments = Department::where('id', '=', $proposedCourse->department_id)->first();
@@ -144,7 +144,7 @@ class PrintForm extends Controller
                 'course' => $courses->course_name,
                 'department' => $departments->department_name,
                 'passport' => $applicationDetails->filename,
-                'appliedProgram' => $applicationDetails->programme_id,
+
 
             );
             return view('offer')->with($data);
