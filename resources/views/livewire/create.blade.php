@@ -11,13 +11,16 @@
             <form wire:submit.prevent="addInstitution" action="#" method="POST" enctype="multipart/form-data"
                 role="form text-left">
                 @csrf
+
                 <div class="row">
 
                     <div class="col-lg-6 col-md-6">
                         <div class="form-group">
                             <label for="institutionName" class="col-form-label">School Name:</label>
                             <input type="text" wire:model="institutionName" class="form-control">
-                            @error('institutionName') <div class="text-danger">{{ $message }}</div> @enderror
+                            @error('institutionName')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -29,25 +32,32 @@
                                 <option value="secondary certificate">Secondary Certificate</option>
 
 
-                                @error('certificate') <div class="text-danger">{{ $message }}</div> @enderror
+                                @error('certificate')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </select>
 
                         </div>
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col-lg-6 col-md-6">
                         <div class="form-group">
                             <label for="startDate" class="col-form-label">Start Date:</label>
                             <input id="startDate" wire:model="startDate" type="text" class="form-control">
-                            @error('startDate') <div class="text-danger">{{ $message }}</div> @enderror
+                            @error('startDate')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6">
                         <div class="form-group">
                             <label for="endDate" class="col-form-label">End Date:</label>
                             <input id="startDate" wire:model="endDate" type="text" class="form-control">
-                            @error('endDate') <div class="text-danger">{{ $message }}</div> @enderror
+                            @error('endDate')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                 </div>
@@ -64,6 +74,7 @@
                     </div>
 
                 </div>
+
                 <div class="bg-dark-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                     <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
                         <button wire:click="addInstitution"
