@@ -17,7 +17,7 @@ use App\Models\ExamDetail;
 use App\Models\ExamGrade;
 use App\Models\Status;
 use App\Models\Course;
-use App\Rules\ImageNotRequiredIfFilenameExists;
+
 use Exception;
 
 use Livewire\WithFileUploads;
@@ -61,7 +61,7 @@ class Profile extends Component
     public $fullName;
     public $path;
     public $applications = '';
-
+    public $remainingInstitution;
     public $showDemoNotification = false;
     public $showFailureNotification = false;
     public $currentStep = 1;
@@ -421,8 +421,17 @@ class Profile extends Component
     //Academic Area
     public function create()
     {
-        $this->resetInputFields();
-        $this->openModal();
+        $count = Institution::where('account_id', $this->user)->count();
+        $this->remainingInstitution = 2 - $count;
+        if ($this->remainingInstitution) {
+            $this->resetInputFields();
+            $this->openModal();
+        } else {
+            $this->deleteMsg = 'You can only add two Institutions';
+
+
+            $this->showFailureNotification = true;
+        }
     }
     public function openModal()
     {
@@ -443,45 +452,41 @@ class Profile extends Component
     public function addInstitution()
     {
         $count = Institution::where('account_id', $this->user)->count();
-        if ($count >= 2) {
-            $this->successMsg = 'Max reached';
 
-            $this->showFailureNotification = true;
-        } else {
-            $validatedData = $this->validate([
-                'institutionName' => 'required',
-                'certificate' => 'required',
-                'startDate' => 'required',
-                'endDate' => 'required',
+        $validatedData = $this->validate([
+            'institutionName' => 'required',
+            'certificate' => 'required',
+            'startDate' => 'required',
+            'endDate' => 'required',
 
-            ]);
+        ]);
 
-            try {
+        try {
 
-                Institution::updateOrCreate(
-                    [
+            Institution::updateOrCreate(
+                [
 
-                        'id' => $this->institutionId
-                    ],
-                    [
-                        'account_id' => $this->user,
-                        'rrr_code' =>  $this->transaction->RRR,
-                        'sch_colle_name' => $this->institutionName,
-                        'certificate_obtained' => $this->certificate,
+                    'id' => $this->institutionId
+                ],
+                [
+                    'account_id' => $this->user,
+                    'rrr_code' =>  $this->transaction->RRR,
+                    'sch_colle_name' => $this->institutionName,
+                    'certificate_obtained' => $this->certificate,
 
-                        'start_date' => $this->startDate,
-                        'end_date' => $this->endDate
-                    ]
-                );
-            } catch (Exception $e) {
-                dd($e->getMessage());
-            }
-
-            $this->deleteMsg = '';
-            $this->showSuccesNotification = false;
-            $this->showSuccesNotification = true;
-            $this->showSuccesNotification =  $this->institutionId ? $this->successMsg = 'Data Updated Successfully.' : $this->successMsg = 'Data Added Successfully.';
+                    'start_date' => $this->startDate,
+                    'end_date' => $this->endDate
+                ]
+            );
+        } catch (Exception $e) {
+            dd($e->getMessage());
         }
+
+        $this->deleteMsg = '';
+        $this->showSuccesNotification = false;
+        $this->showSuccesNotification = true;
+        $this->showSuccesNotification =  $this->institutionId ? $this->successMsg = 'Data Updated Successfully.' : $this->successMsg = 'Data Added Successfully.';
+
 
 
 
@@ -515,8 +520,17 @@ class Profile extends Component
     //Academic Details
     public function createExam()
     {
-        $this->resetExamFields();
-        $this->openModal();
+        $count = ExamDetail::where('account_id', $this->user)->count();
+        $remainingExamDetail = 2 - $count;
+        if ($remainingExamDetail) {
+            $this->resetExamFields();
+            $this->openModal();
+        } else {
+            $this->deleteMsg = 'You can only add maximum of two Exam types';
+
+
+            $this->showFailureNotification = true;
+        }
     }
 
     private function resetExamFields()
@@ -534,40 +548,32 @@ class Profile extends Component
             'examNo' => 'required',
             'examDate' => 'required|digits:4'
         ]);
-        if ($count >= 2) {
-            // $this->successMsg = '';
-            $this->showSuccesNotification = false;
-            $this->showFailureNotification = true;
-            $this->deleteMsg = 'Max no of SSCE Reached please delete an exam and try again';
-        } else {
 
-            try {
-                $insert = ExamDetail::updateOrCreate(
-                    [
 
-                        'id' => $this->examId,
+        try {
+            $insert = ExamDetail::updateOrCreate(
+                [
 
-                    ],
-                    [
-                        'account_id' => $this->user,
-                        'rrr_code' =>  $this->transaction->RRR,
-                        'exam_name' => $this->examName,
-                        'exam_no' => $this->examNo,
-                        'exam_date' => $this->examDate
+                    'id' => $this->examId,
 
-                    ]
-                );
-            } catch (Exception $e) {
-                dd($e->getMessage());
-            }
-            // dd($insert);
-            $this->deleteMsg = '';
-            $this->showFailureNotification = false;
-            $this->showSuccesNotification = true;
-            $this->showSuccesNotification =  $this->examId ? $this->successMsg = 'Data Updated Successfully.' : $this->successMsg = 'Data Added Successfully.';
+                ],
+                [
+                    'account_id' => $this->user,
+                    'rrr_code' =>  $this->transaction->RRR,
+                    'exam_name' => $this->examName,
+                    'exam_no' => $this->examNo,
+                    'exam_date' => $this->examDate
+
+                ]
+            );
+        } catch (Exception $e) {
+            dd($e->getMessage());
         }
-
-
+        // dd($insert);
+        $this->deleteMsg = '';
+        $this->showFailureNotification = false;
+        $this->showSuccesNotification = true;
+        $this->showSuccesNotification =  $this->examId ? $this->successMsg = 'Data Updated Successfully.' : $this->successMsg = 'Data Added Successfully.';
 
         $this->closeModal();
         $this->resetExamFields();
