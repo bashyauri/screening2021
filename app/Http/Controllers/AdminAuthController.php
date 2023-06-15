@@ -9,6 +9,7 @@ class AdminAuthController extends Controller
 {
     public function showLoginForm()
     {
+        dd('asfasfg');
         return view('admin.login');
     }
 

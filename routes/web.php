@@ -60,7 +60,7 @@ Route::middleware('auth')->group(function () {
 
     // Laravel 8
     Route::get('print', [PrintForm::class, 'printForm'])->name('print');
-      Route::get('offer', [PrintForm::class, 'printOffer'])->name('offer');
+    Route::get('offer', [PrintForm::class, 'printOffer'])->name('offer');
     Route::post('process', [RemitaController::class, 'confirmPayment'])->name('process');
     Route::post('invoice', [RemitaController::class, 'generateInvoice'])->name('invoice');
     Route::get('invoice', [RemitaController::class, 'generateInvoice'])->name('invoice');
@@ -90,3 +90,4 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+require __DIR__ . '/admin.php';
