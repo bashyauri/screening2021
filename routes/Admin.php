@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->group(function () {
     // Admin dashboard route
+    Route::get('/', function () {
+        return view('admin.auth.login');
+    });
 
     Route::get('/login', [AuthController::class, 'login'])->name('admin.login');
 
