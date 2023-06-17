@@ -16,10 +16,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()->create([
-            'name' => 'admin',
-            'email' => 'admin@softui.com',
-            'password' => Hash::make('secret')
-        ]);
+        $this->call(RoleSeeder::class);
+//        User::factory()->create([
+//            'name' => 'admin',
+//            'email' => 'admin@softui.com',
+//            'password' => Hash::make('secret')
+//        ]);
     }
 }
