@@ -11,7 +11,7 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        dd('admin');
+        return view('admin.dashboard');
     }
     public function logout(): RedirectResponse
     {
