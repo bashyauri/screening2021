@@ -12,11 +12,11 @@ Route::prefix('admin')->group(function () {
     });
 
     Route::get('/login', [\App\Http\Controllers\Admin\LoginController::class, 'showLoginForm'])->name('admin.login');
-
+    Route::post('/login', [\App\Http\Controllers\Admin\LoginController::class, 'login'])->name('admin.login');
     // Other admin routes...
     Route::group(['middleware' => 'admin.auth'], function () {
         // Admin routes
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-        Route::get('/logout',[AdminController::class,'logout']);
+        Route::get('/logout', [AdminController::class, 'logout']);
     });
 });
