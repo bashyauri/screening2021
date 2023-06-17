@@ -7,36 +7,37 @@ use App\Http\Requests\Admin\LoginRequest;
 use App\Services\Admin\LoginService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-
+use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 
 class LoginController extends Controller
 {
     public function __construct(
         protected LoginService $loginService
-    ){}
-    public function showLoginForm() :View
+    ) {
+    }
+    public function showLoginForm(): View
     {
 
         return view('admin.login');
     }
 
-    public function login(LoginRequest $request) : RedirectResponse
+    public function login(LoginRequest $request): RedirectResponse
     {
+        try {
+            if ($this->loginService->login($request->validated())) {
 
-        if ($this->loginService->login($request->validated())) {
-            // Authentication successful
-            return redirect()->intended('/admin/dashboard');
-        } else {
-            // Authentication failed
-            return back()->withErrors(['errol_message' => 'Invalid credentials']);
+                return redirect()->intended('/admin/dashboard');
+            }
+            return back()->withErrors(['enrol_message' => 'Invalid credentials']);
+        } catch (Exception $e ) {
+            Log::alert($e->getMessage());
+            return redirect()->back()->withErrors(['msgError' => 'Something went wrong']);
         }
+
     }
 
-    public function logout() :RedirectResponse
-    {
-        Auth::guard('admin')->logout();
-        return redirect('/admin/login');
-    }
+
 }
