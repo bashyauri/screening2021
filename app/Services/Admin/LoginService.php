@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Auth;
  */
 class LoginService
 {
-    public function login($credentials){
+    public function login($credentials) : bool
+    {
         return Auth::guard('admin')->attempt($credentials);
     }
 }
