@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('admin')->group(function () {
     // Admin dashboard route
     Route::get('/', function () {
-        return view('admin.auth.login');
+        return view('admin.login');
     });
 
-    Route::get('/login', [AuthController::class, 'login'])->name('admin.login');
+    Route::get('/login', [\App\Http\Controllers\Admin\LoginController::class, 'showLoginForm'])->name('admin.login');
 
     // Other admin routes...
     Route::group(['middleware' => 'admin.auth'], function () {
