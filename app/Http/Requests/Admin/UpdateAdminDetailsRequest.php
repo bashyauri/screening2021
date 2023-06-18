@@ -24,7 +24,7 @@ class UpdateAdminDetailsRequest extends FormRequest
     public function rules()
     {
         return [
-            'admin_name' => ['required', 'string', 'max:255'],
+            'admin_name' => ['required', 'string', 'max:255',  'regex:/\D/'],
         ];
     }
     public function messages()
