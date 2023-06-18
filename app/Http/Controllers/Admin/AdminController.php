@@ -3,15 +3,23 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-
+use App\Http\Requests\Admin\UpdateAdminDetailsRequest;
+use App\Services\Admin\UpdateAdminDetailsService;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
 {
-    public $ssceDetails;
+    public  $ssceDetails;
+    public function __construct(
+
+        protected UpdateAdminDetailsService $updateAdminDetailsService
+    ) {
+    }
     public function dashboard()
     {
 
@@ -46,8 +54,18 @@ class AdminController extends Controller
 
         return view('admin.settings.update_admin_details');
     }
-    public function updateAdminDetails()
+    public function updateAdminDetails(UpdateAdminDetailsRequest $request)
     {
+
+        try {
+            if ($this->updateAdminDetailsService->updateAdminDetailService($request->validated())) {
+                return  redirect()->back()->with(['success_message' => 'Name Updated']);
+            }
+            return back()->withErrors(['error_message' => 'Invalid credentials']);
+        } catch (Exception $e) {
+            Log::alert($e->getMessage());
+            return redirect()->back()->withErrors(['error_message' => 'Something went wrong']);
+        }
     }
     public function logout(): RedirectResponse
     {
