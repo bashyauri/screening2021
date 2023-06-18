@@ -31,4 +31,10 @@ class UpdateAdminPasswordRequest extends FormRequest
             'confirm_password' => ['required', 'same:new_password'],
         ];
     }
+    public function messages()
+    {
+        return [
+            'current_password.required' => ['Current Password is Required'],
+        ];
+    }
 }
