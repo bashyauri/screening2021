@@ -3,8 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Password;
-
+use Illuminate\Validation\Rules\Password;
 
 class UpdateAdminPasswordRequest extends FormRequest
 {
