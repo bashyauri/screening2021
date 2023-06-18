@@ -2,13 +2,13 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminLogoutController;
-use App\Http\Controllers\Admin\AuthController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->group(function () {
     // Admin dashboard route
     Route::get('/', function () {
-        return view('admin.login');
+        return redirect('admin.dashboard');
     });
 
     Route::get('/login', [\App\Http\Controllers\Admin\LoginController::class, 'showLoginForm'])->name('admin.login');
