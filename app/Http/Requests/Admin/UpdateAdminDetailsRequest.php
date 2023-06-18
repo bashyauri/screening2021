@@ -27,4 +27,10 @@ class UpdateAdminDetailsRequest extends FormRequest
             'admin_name' => ['required', 'string', 'max:255'],
         ];
     }
+    public function messages()
+    {
+        return [
+            'admin_name.required' => ['Admin Name is Required'],
+        ];
+    }
 }
