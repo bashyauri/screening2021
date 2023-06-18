@@ -61,7 +61,6 @@ class AdminController extends Controller
             if ($this->updateAdminDetailsService->updateAdminDetailService($request->validated())) {
                 return  redirect()->back()->with(['success_message' => 'Name Updated']);
             }
-            return back()->withErrors(['error_message' => 'Invalid credentials']);
         } catch (Exception $e) {
             Log::alert($e->getMessage());
             return redirect()->back()->withErrors(['error_message' => 'Something went wrong']);
