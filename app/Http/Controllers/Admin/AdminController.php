@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UpdateAdminDetailsRequest;
 use App\Http\Requests\Admin\UpdateAdminPasswordRequest;
+use App\Services\Admin\Reports\ApplicantsService;
 use App\Services\Admin\UpdateAdminDetailsService;
 use App\Services\Admin\UpdateAdminPasswordService;
 use Exception;
@@ -20,27 +21,17 @@ class AdminController extends Controller
     public function __construct(
 
         protected UpdateAdminDetailsService $updateAdminDetailsService,
-        protected UpdateAdminPasswordService $updateAdminPasswordService
+        protected UpdateAdminPasswordService $updateAdminPasswordService,
+        protected ApplicantsService $applicants
     ) {
     }
     public function dashboard()
     {
 
         $examDetails = DB::table('proposed_courses')
-
-
             ->where('department_id', Auth::guard('admin')->user()->department_id)
             ->get();
-        $applicants = DB::table('application_form')
-            ->join('proposed_courses', 'application_form.account_id', 'proposed_courses.account_id')
-            ->join('tb_accountcreation', 'application_form.account_id', 'tb_accountcreation.account_id')
-            ->join('courses', 'courses.id', 'proposed_courses.course_id')
-            ->where('application_form.department_id', '=', 0)
-            ->where('proposed_courses.department_id', '=', Auth::guard('admin')->user()->department_id)
-            ->select('application_form.*', 'courses.course_name', 'proposed_courses.score', 'tb_accountcreation.jambno')
-            // ->orderBy('application_form.created_at', 'asc')
-            ->orderBy('proposed_courses.course_id', 'asc')
-            ->get();
+        $applicants = $this->applicants->getApplicants();
 
         $data = array(
             'applicants' => $applicants,
@@ -83,10 +74,5 @@ class AdminController extends Controller
             Log::alert($e->getMessage());
             return redirect()->back()->withErrors(['error_message' => 'Something went wrong']);
         }
-    }
-    public function logout(): RedirectResponse
-    {
-        Auth::guard('admin')->logout();
-        return redirect('/admin/login');
     }
 }
