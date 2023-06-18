@@ -19,6 +19,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
         Route::get('/get-admin-details', [AdminController::class, 'getAdminDetails']);
         Route::post('/update-admin-details', [AdminController::class, 'updateAdminDetails']);
+        Route::get('/get-admin-password', [AdminController::class, 'getAdminPassword']);
 
         Route::get('/logout', [AdminController::class, 'logout']);
     });
