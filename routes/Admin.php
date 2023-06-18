@@ -17,8 +17,8 @@ Route::prefix('admin')->group(function () {
     Route::group(['middleware' => 'admin.auth'], function () {
         // Admin routes
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-        Route::get('/get-admin-details', [AdminController::class, 'getAdminDetails'])->name('update');
-        Route::post('/update-admin-details', [AdminController::class, 'updateDetails'])->name('update');
+        Route::get('/get-admin-details', [AdminController::class, 'getAdminDetails']);
+        Route::post('/update-admin-details', [AdminController::class, 'updateAdminDetails']);
 
         Route::get('/logout', [AdminController::class, 'logout']);
     });
