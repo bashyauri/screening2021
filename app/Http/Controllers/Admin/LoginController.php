@@ -8,7 +8,6 @@ use App\Services\Admin\LoginService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Exception;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 
@@ -32,12 +31,9 @@ class LoginController extends Controller
                 return redirect()->intended('/admin/dashboard');
             }
             return back()->withErrors(['enrol_message' => 'Invalid credentials']);
-        } catch (Exception $e ) {
+        } catch (Exception $e) {
             Log::alert($e->getMessage());
             return redirect()->back()->withErrors(['msgError' => 'Something went wrong']);
         }
-
     }
-
-
 }
