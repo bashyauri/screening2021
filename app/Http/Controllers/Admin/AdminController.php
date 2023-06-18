@@ -66,6 +66,10 @@ class AdminController extends Controller
             return redirect()->back()->withErrors(['error_message' => 'Something went wrong']);
         }
     }
+    public function getAdminPassword()
+    {
+        return view('admin.settings.update_admin_password');
+    }
     public function logout(): RedirectResponse
     {
         Auth::guard('admin')->logout();
