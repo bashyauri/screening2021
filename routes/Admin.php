@@ -20,6 +20,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/get-admin-details', [AdminController::class, 'getAdminDetails']);
         Route::post('/update-admin-details', [AdminController::class, 'updateAdminDetails']);
         Route::get('/get-admin-password', [AdminController::class, 'getAdminPassword']);
+        Route::post('/update-admin-password', [AdminController::class, 'updateAdminPassword']);
 
         Route::get('/logout', [AdminController::class, 'logout']);
     });
