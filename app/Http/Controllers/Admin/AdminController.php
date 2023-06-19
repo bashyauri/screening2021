@@ -43,6 +43,22 @@ class AdminController extends Controller
 
         return view('admin.dashboard')->with($data);
     }
+    public function getApplicants()
+    {
+        $examDetails = DB::table('proposed_courses')
+            ->where('department_id', Auth::guard('admin')->user()->department_id)
+            ->get();
+        $applicants = $this->applicants->getApplicants();
+
+        $data = array(
+            'applicants' => $applicants,
+
+            'ssceDetails' => $this->ssceDetails,
+            'department_id' => Auth::guard('admin')->user()->department_id
+        );
+
+        return response()->json(['data' => $data]);
+    }
     public function getAdminDetails()
     {
 
