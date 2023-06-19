@@ -21,7 +21,6 @@ class CreateExamDetailsTable extends Migration
             $table->string('exam_no')->unique();
             $table->string('exam_date');
             $table->timestamps();
-           
         });
     }
 
