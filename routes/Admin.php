@@ -21,6 +21,7 @@ Route::prefix('admin')->group(function () {
         Route::post('/update-admin-details', [AdminController::class, 'updateAdminDetails']);
         Route::get('/get-admin-password', [AdminController::class, 'getAdminPassword']);
         Route::post('/update-admin-password', [AdminController::class, 'updateAdminPassword']);
+        Route::get('/get-applicants', [AdminController::class, 'getApplicants']);
 
         Route::get('/logout', [AdminLogoutController::class, 'logout']);
     });
