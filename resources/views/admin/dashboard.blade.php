@@ -736,7 +736,7 @@
                                         <table id="example" class="display expandable-table" style="width:100%">
                                             <thead>
                                                 <tr>
-                                                    <th>Quote#</th>
+                                                    <th>#</th>
                                                     <th>Full Name</th>
                                                     <th>Jamb Details</th>
                                                     <th>SSCE Details</th>
