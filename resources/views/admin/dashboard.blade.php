@@ -736,14 +736,14 @@
                                         <table id="example" class="display expandable-table" style="width:100%">
                                             <thead>
                                                 <tr>
-                                                    <th>#</th>
-                                                    <th>Full Name</th>
-                                                    <th>Jamb Details</th>
-                                                    <th>SSCE Details</th>
-                                                    <th>Course Applied</th>
+                                                    <th>Surname</th>
+                                                    <th>First Name</th>
+                                                    <th>Middle Name</th>
+                                                    <th>Phone number</th>
                                                     <th>State</th>
                                                     <th>LGA</th>
-                                                    <th>Criteria</th>
+                                                    <th>Jamb No</th>
+                                                    <th>Score</th>
                                                     <th>Remark</th>
                                                     <th></th>
                                                 </tr>
