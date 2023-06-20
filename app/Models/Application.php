@@ -18,4 +18,8 @@ class Application extends Model
     {
         return $this->belongsTo(Lga::class, 'lgaid');
     }
+    public function examGrades()
+    {
+        return $this->belongsToMany(ExamGrade::class);
+    }
 }
