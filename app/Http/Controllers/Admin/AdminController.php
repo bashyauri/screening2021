@@ -27,8 +27,14 @@ class AdminController extends Controller
     }
     public function dashboard()
     {
+        $applicants = $this->applicants->getApplicants();
 
-        return view('admin.dashboard');
+
+        $data = array(
+            'applicants' => $applicants,
+            'department_id' => Auth::guard('admin')->user()->department_id
+        );
+        return view('admin.dashboard')->with($data);
     }
     public function getApplicants()
     {
