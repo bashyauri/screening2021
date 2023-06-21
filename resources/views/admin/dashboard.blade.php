@@ -733,7 +733,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="table-responsive">
-                                        <table id="example" class="display expandable-table" style="width:100%">
+                                        <table class="display expandable-table" style="width:100%">
                                             <thead>
                                                 <tr>
                                                     <th>Surname</th>
@@ -748,6 +748,57 @@
                                                     <th></th>
                                                 </tr>
                                             </thead>
+                                            <tbody>
+                                                @foreach ($applicants as $application)
+                                                    <tr>
+                                                        <td>{{ $application->surname }} </td>
+                                                        <td>{{ $application->firstname }} </td>
+                                                        <td>{{ $application->m_name }} </td>
+                                                        <td>{{ $application->p_number }} </td>
+                                                        <td>{{ $application->name }} </td>
+                                                        <td>{{ $application->lga }} </td>
+                                                        <td>{{ $application->jambno }} </td>
+                                                        <td>{{ $application->score }} </td>
+                                                        <td>{{ $application->remark }} </td>
+                                                        <td><input type="button" id="expand" name="expand"
+                                                                value="+"></td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="5">
+                                                            <div class="row">
+                                                                <div class="col mb-4 mb-lg-0 stretch-card transparent">
+                                                                    <div class="card card-light-blue">
+                                                                        <div class="card-body">
+                                                                            <p class="card-title text-white">SSCE Details
+                                                                            </p>
+                                                                            <form action="" method="post">
+                                                                                @php
+                                                                                    $grades = $application->exam_grades->chunk(2);
+                                                                                @endphp
+                                                                                @foreach ($grades as $gradeRow)
+                                                                                    <div class="row">
+                                                                                        @foreach ($gradeRow as $exam_grade)
+                                                                                            <div class="col-md-6">
+                                                                                                <p class="mb-2">
+                                                                                                    {{ $exam_grade->exam_name . '--->' . $exam_grade->subject_name . ' ' . $exam_grade->grade }}
+                                                                                                </p>
+                                                                                            </div>
+                                                                                        @endforeach
+                                                                                    </div>
+                                                                                @endforeach
+
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+
 
                                         </table>
                                     </div>
