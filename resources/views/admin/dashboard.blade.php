@@ -751,28 +751,26 @@
                                             <tbody>
                                                 @foreach ($applicants as $application)
                                                     <tr>
-                                                        <td>{{ $application->surname }} </td>
-                                                        <td>{{ $application->firstname }} </td>
-                                                        <td>{{ $application->m_name }} </td>
-                                                        <td>{{ $application->p_number }} </td>
-                                                        <td>{{ $application->name }} </td>
-                                                        <td>{{ $application->lga }} </td>
-                                                        <td>{{ $application->jambno }} </td>
-                                                        <td>{{ $application->score }} </td>
-                                                        <td>{{ $application->remark }} </td>
-                                                        <td><input type="button" id="expand" name="expand"
-                                                                value="+"></td>
-
+                                                        <td>{{ $application->surname }}</td>
+                                                        <td>{{ $application->firstname }}</td>
+                                                        <td>{{ $application->m_name }}</td>
+                                                        <td>{{ $application->p_number }}</td>
+                                                        <td>{{ $application->name }}</td>
+                                                        <td>{{ $application->lga }}</td>
+                                                        <td>{{ $application->jambno }}</td>
+                                                        <td>{{ $application->score }}</td>
+                                                        <td>{{ $application->remark }}</td>
+                                                        <td><button class="expand-button">+</button></td>
                                                     </tr>
-                                                    <tr>
+                                                    <tr class="hidden-row">
                                                         <td colspan="5">
                                                             <div class="row">
                                                                 <div class="col mb-4 mb-lg-0 stretch-card transparent">
                                                                     <div class="card card-light-blue">
                                                                         <div class="card-body">
-                                                                            <p class="card-title text-white">SSCE Details
-                                                                            </p>
-                                                                            <form action="" method="post">
+                                                                            <p class="card-title text-white">SSCE Details</p>
+                                                                            <form action method="post">
+                                                                                @csrf
                                                                                 @php
                                                                                     $grades = $application->exam_grades->chunk(2);
                                                                                 @endphp
@@ -787,17 +785,17 @@
                                                                                         @endforeach
                                                                                     </div>
                                                                                 @endforeach
-
                                                                             </form>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </td>
-
                                                     </tr>
                                                 @endforeach
                                             </tbody>
+
+
 
 
                                         </table>
