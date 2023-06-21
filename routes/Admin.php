@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminLogoutController;
-
+use App\Http\Controllers\Admin\ApplicantController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->group(function () {
@@ -22,6 +22,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/get-admin-password', [AdminController::class, 'getAdminPassword']);
         Route::post('/update-admin-password', [AdminController::class, 'updateAdminPassword']);
         Route::get('/get-applicants', [AdminController::class, 'getApplicants']);
+        Route::post('/recommend', [ApplicantController::class], 'recommend');
 
         Route::get('/logout', [AdminLogoutController::class, 'logout']);
     });
