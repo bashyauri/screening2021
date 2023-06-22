@@ -763,66 +763,82 @@
                                                         <td><button class="expand-button">+</button></td>
                                                     </tr>
                                                     <tr class="hidden-row">
-                                                        <td colspan="5">
-                                                            <div class="row">
-                                                                <div class="col mb-4 mb-lg-0 stretch-card transparent">
-                                                                    <div class="card card-light-blue">
-                                                                        <div class="card-body">
-                                                                            <p class="card-title text-white">SSCE Details
-                                                                            </p>
-                                                                            @php
-                                                                                $grades = $application->exam_grades->chunk(2);
-                                                                            @endphp
-                                                                            @foreach ($grades as $gradeRow)
-                                                                                <div class="row">
-                                                                                    @foreach ($gradeRow as $exam_grade)
-                                                                                        <div class="col-md-6">
-                                                                                            <p class="mb-2">
-                                                                                                {{ $exam_grade->exam_name . '--->' . $exam_grade->subject_name . ' ' . $exam_grade->grade }}
-                                                                                            </p>
-                                                                                        </div>
-                                                                                    @endforeach
-                                                                                </div>
-                                                                            @endforeach
+                                                        <form action="{{ route('recommend') }}" method="POST"
+                                                            id="applicationForm">
+                                                            @csrf
+
+                                                            <td colspan="5">
+
+                                                                <div class="row">
+                                                                    <div class="col mb-4 mb-lg-0 stretch-card transparent">
+                                                                        <div class="card card-light-blue">
+                                                                            <div class="card-body">
+                                                                                <p class="card-title text-white">SSCE
+                                                                                    Details
+                                                                                </p>
+
+                                                                                @php
+                                                                                    $grades = $application->exam_grades->chunk(2);
+                                                                                @endphp
+                                                                                @foreach ($grades as $gradeRow)
+                                                                                    <div class="row">
+                                                                                        @foreach ($gradeRow as $exam_grade)
+                                                                                            <div class="col-md-6">
+                                                                                                <p class="mb-2">
+                                                                                                    {{ $exam_grade->exam_name . '--->' . $exam_grade->subject_name . ' ' . $exam_grade->grade }}
+                                                                                                </p>
+                                                                                            </div>
+                                                                                        @endforeach
+                                                                                    </div>
+                                                                                @endforeach
+
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="col mb-4 mb-lg-0">
-                                                                <p>Select Criteria</p>
-                                                                <select name="criteria" class="criteria">
-                                                                    <option value="">choose</option>
-                                                                    <option value="merit">merit</option>
-                                                                    <option value="elds">elds</option>
-                                                                    <option value="catchment area">catchment area</option>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="col mb-4 mb-lg-0">
-                                                                <p>Comments</p>
-                                                                <input type="text" name="comments" class="comments">
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="col mb-4 mb-lg-0">
-                                                                <p>Recommend</p>
-                                                                <input type="checkbox" name="recommend"
-                                                                    class="recommend-checkbox"
-                                                                    value="{{ $application->account_id }}">
-                                                            </div>
-                                                        </td>
 
+                                                            </td>
+                                                            <td>
+                                                                <div class="col mb-4 mb-lg-0 ">
+                                                                    <p>Select Criteria</p>
+                                                                    <select name="criteria" id="criteria">
+                                                                        <option value="">choose</option>
+                                                                        <option value="merit">merit</option>
+                                                                        <option value="elds">elds</option>
+                                                                        <option value="catchment area">catchment area
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="col mb-4 mb-lg-0 ">
+                                                                    <p>Comments</p>
+                                                                    <input type="text" name="comments" id="comments">
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="col mb-4 mb-lg-0 ">
+                                                                    <p>Recommend</p>
+                                                                    <input type="checkbox" name="recommend"
+                                                                        id="recommend-checkbox"
+                                                                        value={{ $application->account_id }}>
+                                                                </div>
+
+                                                            </td>
+
+                                                        </form>
                                                     </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
 
 
 
                                     </div>
+                                    @endforeach
+
+                                    </tbody>
+
+
+
+
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -830,9 +846,10 @@
                 </div>
             </div>
         </div>
-        <!-- content-wrapper ends -->
-        <!-- partial:partials/_footer.html -->
-        @include('admin.layout.footer')
-        <!-- partial -->
+    </div>
+    <!-- content-wrapper ends -->
+    <!-- partial:partials/_footer.html -->
+    @include('admin.layout.footer')
+    <!-- partial -->
     </div>
 @endsection
