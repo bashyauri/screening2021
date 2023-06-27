@@ -729,10 +729,18 @@
                 <div class="col-md-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <p class="card-title">Advanced Table</p>
+
                             @if (Session::has('error_message'))
                                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                     <strong>Error</strong> {{ Session::get('error_message') }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @endif
+                            @if (Session::has('success_message'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>Success</strong> {{ Session::get('success_message') }}
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -750,7 +758,10 @@
 
                                 </div>
                             @endif
+                            <p class="card-title">List of Applicants</p>
+
                             <div class="row">
+                                <div class="message-container"></div>
                                 <div class="col-12">
                                     <div class="table-responsive">
                                         <table class="display expandable-table" style="width:100%">
@@ -812,7 +823,7 @@
                                                         <td>
                                                             <div class="col mb-4 mb-lg-0">
                                                                 <p>Select Criteria</p>
-                                                                <select name="criteria" class="criteria">
+                                                                <select name="criteria" class="criteria" required>
                                                                     <option value="">choose</option>
                                                                     <option value="merit">merit</option>
                                                                     <option value="elds">elds</option>
