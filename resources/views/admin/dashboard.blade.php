@@ -761,7 +761,7 @@
                             <p class="card-title">List of Applicants</p>
 
                             <div class="row">
-                                <div class="message-container"></div>
+
                                 <div class="col-12">
                                     <div class="table-responsive">
                                         <table class="display expandable-table" style="width:100%">
@@ -793,8 +793,13 @@
                                                         <td>{{ $application->remark }}</td>
                                                         <td><button class="expand-button">+</button></td>
                                                     </tr>
+
+
+
                                                     <tr class="hidden-row">
+
                                                         <td colspan="5">
+                                                            <div class="row message-container"></div>
                                                             <div class="row">
                                                                 <div class="col mb-4 mb-lg-0 stretch-card transparent">
                                                                     <div class="card card-light-blue">
@@ -845,6 +850,7 @@
                                                                     value="{{ $application->account_id }}">
                                                             </div>
                                                         </td>
+
 
                                                     </tr>
                                                 @endforeach
