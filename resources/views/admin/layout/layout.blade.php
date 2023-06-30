@@ -63,6 +63,8 @@
     <!-- Custom Admin Js-->
     <script src="{{ url('admin/js/custom.js') }}"></script>
     <script src="{{ url('admin/js/ajax.js') }}"></script>
+    <script src="{{ url('admin/js/ajax/drop-applicants.js') }}"></script>
+    <script src="{{ url('admin/js/ajax/recommend-applicants.js') }}"></script>
     <!-- End Custom Admin Js-->
 
 </body>
