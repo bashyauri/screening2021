@@ -21,4 +21,14 @@ class ApplicantService
             ]
         );
     }
+    public function dropRecommendedApplicant($accountId)
+    {
+        return Application::where('account_id', $accountId)
+            ->update([
+                'department_id' => 0,
+                'remark' => null,
+                'recommendation' => null,
+                'comment' => null,
+            ]);
+    }
 }
