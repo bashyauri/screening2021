@@ -32,7 +32,7 @@ class AdminController extends Controller
 
         $data = array(
             'applicants' => $applicants,
-            'department_id' => Auth::guard('admin')->user()->department_id
+
         );
         return view('admin.dashboard')->with($data);
     }

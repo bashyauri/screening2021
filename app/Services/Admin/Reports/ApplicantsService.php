@@ -50,14 +50,15 @@ class ApplicantsService
             ->orderBy('proposed_courses.course_id', 'asc')
             ->get();
 
-        $applicants = $applicants->map(function ($applicant) {
-            $applicant->exam_grades = DB::table('exam_grades')
-                ->where('account_id', $applicant->account_id)
-                ->get();
+        $applicantIds = $applicants->pluck('account_id')->toArray();
+        $examGrades = DB::table('exam_grades')
+            ->whereIn('account_id', $applicantIds)
+            ->get();
 
+        $applicants = $applicants->map(function ($applicant) use ($examGrades) {
+            $applicant->exam_grades = $examGrades->where('account_id', $applicant->account_id);
             return $applicant;
         });
-
         return $applicants;
     }
 }
