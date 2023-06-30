@@ -775,7 +775,7 @@
                                                     <th>LGA</th>
                                                     <th>Jamb No</th>
                                                     <th>Score</th>
-                                                    <th>Remark</th>
+
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -790,7 +790,7 @@
                                                         <td>{{ $application->lga }}</td>
                                                         <td>{{ $application->jambno }}</td>
                                                         <td>{{ $application->score }}</td>
-                                                        <td>{{ $application->remark }}</td>
+
                                                         <td><button class="expand-button btn btn-primary">+</button></td>
                                                     </tr>
 

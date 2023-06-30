@@ -33,4 +33,7 @@ class ApplicantController extends Controller
             ->user()->department_id, 'remark' => 'Qualify for Admission'])->get();
         return view('admin.recommended-applicants', ['recommendedApplicants' => $recommendedApplicants]);
     }
+    public function dropRecommendedApplicants(Request $request)
+    {
+    }
 }

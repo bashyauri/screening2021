@@ -95,8 +95,9 @@
                                                         <td>{{ $applicant->remark }}</td>
 
 
-                                                        <td><input type="checkbox" name="drop" class="drop-checkbox"
-                                                                value="{{ $applicant->account_id }}"></td>
+                                                        <td><input type="checkbox" name="drop-applicant"
+                                                                class="drop-checkbox" value="{{ $applicant->account_id }}">
+                                                        </td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>

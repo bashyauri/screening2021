@@ -24,7 +24,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/get-applicants', [AdminController::class, 'getApplicants']);
         Route::post('/recommend', [ApplicantController::class, 'recommend'])->name('recommend');
         Route::get('/recommended-applicants', [ApplicantController::class, 'getRecommendedApplicants'])->name('admin.recommended-applicants');
-
+        Route::get('/drop-applicants', [ApplicantController::class, 'dropRecommendedApplicants'])->name('admin.drop-applicants');
 
 
         Route::get('/logout', [AdminLogoutController::class, 'logout']);
