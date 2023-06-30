@@ -20,7 +20,7 @@ class ApplicantController extends Controller
     {
         try {
             if ($this->applicantService->recommend($request->validated())) {
-                return  redirect()->back()->with(['success_message' => 'Recommended']);
+                return response()->json(['message' => 'Recommendation processed successfully']);
             }
         } catch (Exception $e) {
             Log::alert($e->getMessage());
@@ -33,7 +33,14 @@ class ApplicantController extends Controller
             ->user()->department_id, 'remark' => 'Qualify for Admission'])->get();
         return view('admin.recommended-applicants', ['recommendedApplicants' => $recommendedApplicants]);
     }
-    public function dropRecommendedApplicants(Request $request)
+    public function dropRecommendedApplicants($accountId)
     {
+        try {
+            if ($this->applicantService->dropRecommendedApplicant($accountId)) {
+                return response()->json(['success' => true]);
+            }
+        } catch (Exception $e) {
+            Log::alert($e->getMessage());
+        }
     }
 }
