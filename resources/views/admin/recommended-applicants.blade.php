@@ -98,6 +98,7 @@
                                                         <td><input type="checkbox" name="drop-applicant"
                                                                 class="drop-checkbox" value="{{ $applicant->account_id }}">
                                                         </td>
+                                                        <td class="message-container"></td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
