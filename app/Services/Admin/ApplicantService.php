@@ -12,7 +12,7 @@ class ApplicantService
 {
     public function recommend(array $data)
     {
-        Application::where(['account_id' => $data['accountId']])->update(
+        return  Application::where(['account_id' => $data['accountId']])->update(
             [
                 'department_id' => Auth::guard('admin')->user()->department_id,
                 'remark' => 'Qualify for Admission',

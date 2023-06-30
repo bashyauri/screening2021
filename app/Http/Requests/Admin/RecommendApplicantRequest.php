@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RecommendApplicanRequest extends FormRequest
+class RecommendApplicantRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,6 +24,7 @@ class RecommendApplicanRequest extends FormRequest
     public function rules()
     {
         return [
+            'accountId' => 'required',
             'criteria' => 'required',
             'comment' => 'nullable'
         ];
