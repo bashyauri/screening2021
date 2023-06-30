@@ -9,10 +9,7 @@ use App\Services\Admin\Reports\ApplicantsService;
 use App\Services\Admin\UpdateAdminDetailsService;
 use App\Services\Admin\UpdateAdminPasswordService;
 use Exception;
-use Illuminate\Http\RedirectResponse;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
@@ -45,7 +42,7 @@ class AdminController extends Controller
 
         $data = array(
             'applicants' => $applicants,
-            'department_id' => Auth::guard('admin')->user()->department_id
+
         );
 
         return response()->json(['data' => $data]);

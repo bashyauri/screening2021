@@ -791,7 +791,7 @@
                                                         <td>{{ $application->jambno }}</td>
                                                         <td>{{ $application->score }}</td>
                                                         <td>{{ $application->remark }}</td>
-                                                        <td><button class="expand-button">+</button></td>
+                                                        <td><button class="expand-button btn btn-primary">+</button></td>
                                                     </tr>
 
 

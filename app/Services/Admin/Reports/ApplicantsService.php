@@ -28,7 +28,7 @@ class ApplicantsService
                 'application_form.m_name',
                 'application_form.p_number',
                 'application_form.remark',
-                // Add other columns from application_form table that you need
+
                 'courses.course_name',
                 'proposed_courses.score',
                 'tb_accountcreation.jambno',
