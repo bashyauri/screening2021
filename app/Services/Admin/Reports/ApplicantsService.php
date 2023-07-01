@@ -61,4 +61,7 @@ class ApplicantsService
         });
         return $applicants;
     }
+    public function convertToDocx($html)
+    {
+    }
 }

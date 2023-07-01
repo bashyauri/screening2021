@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminLogoutController;
 use App\Http\Controllers\Admin\ApplicantController;
+use App\Http\Controllers\Admin\ReportController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->group(function () {
@@ -25,6 +26,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/recommend', [ApplicantController::class, 'recommend'])->name('recommend');
         Route::get('/recommended-applicants', [ApplicantController::class, 'getRecommendedApplicants'])->name('admin.recommended-applicants');
         Route::get('/drop-applicants/{Application}', [ApplicantController::class, 'dropRecommendedApplicants'])->name('admin.drop-applicants');
+        Route::get('/convert-to-docx', [ReportController::class, 'convertToDocx']);
 
 
         Route::get('/logout', [AdminLogoutController::class, 'logout']);

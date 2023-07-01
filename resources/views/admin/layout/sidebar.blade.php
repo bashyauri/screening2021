@@ -49,6 +49,7 @@
             </a>
             <div class="collapse" id="form-elements">
                 <ul class="nav flex-column sub-menu">
+
                     <li class="nav-item"><a class="nav-link"
                             href="{{ url('admin/recommended-applicants') }}">Recommended
                         </a>
