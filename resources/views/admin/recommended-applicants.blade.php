@@ -63,11 +63,9 @@
 
                                 </div>
                             @endif
-                            @if (session()->has('download_url'))
-                                <a href="{{ session('download_url') }}" class="btn btn-primary">Download Document</a>
-                            @endif
 
-                            <a href="{{ url('admin/convert-to-docx') }}" class="btn btn-primary">Export</a>
+
+                            <a href="{{ url('admin/convert-to-docx') }}" class="btn btn-primary float-right">Export</a>
                             <p class="card-title">List of Recommended Applicants</p>
 
                             <div class="row">
