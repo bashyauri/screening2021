@@ -24,6 +24,6 @@ class Application extends Model
     }
     public function department()
     {
-        return $this->belongsTo(Departments::class);
+        return $this->belongsTo(Department::class);
     }
 }
