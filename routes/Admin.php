@@ -26,7 +26,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/recommend', [ApplicantController::class, 'recommend'])->name('recommend');
         Route::get('/recommended-applicants', [ApplicantController::class, 'getRecommendedApplicants'])->name('admin.recommended-applicants');
         Route::get('/drop-applicants/{Application}', [ApplicantController::class, 'dropRecommendedApplicants'])->name('admin.drop-applicants');
-        Route::get('/convert-to-docx', [ReportController::class, 'convertToDocx']);
+        Route::get('/convert-to-docx', [ReportController::class, 'exportToDocx']);
 
 
         Route::get('/logout', [AdminLogoutController::class, 'logout']);
