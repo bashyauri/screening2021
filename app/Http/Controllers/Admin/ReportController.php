@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Application;
+use App\Models\Department;
 use App\Services\Admin\Reports\ApplicantsService;
 use App\Services\Admin\ReportService;
 use Illuminate\Http\Request;
@@ -24,12 +25,28 @@ class ReportController extends Controller
         // Create a section
         $section = $phpWord->addSection();
         $section->setOrientation('landscape');
+        // Add an image at the beginning of the page
+        $imagePath = 'assets/img/logos/logo-ct.png';
+        $section->addImage($imagePath, array(
+            'width' => 100,
+            'height' => 100,
+            'align' => 'center'
+        ));
+        $department = Department::find(Auth::guard('admin')->user()->department_id);
+        $title = "List of {$department->department_name} Applicants for 2023/2024 academic session";
+        $section->addText($title, array(
+            'bold' => true,
+            'size' => 14,
+            'align' => 'center',
+            'spaceAfter' => 10 // Adds some space after the title
+        ));
 
         // Table style
         $tableStyle = array(
             'borderColor' => '006699',
             'borderSize' => 6,
-            'cellMargin' => 50
+            'cellMargin' => 50,
+            'align' => 'center'
         );
 
         // First row style
