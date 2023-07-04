@@ -37,14 +37,18 @@ class ApplicantController extends Controller
     public function searchCourseApplicants(Request $request)
     {
 
-        $applicants = $this->applicantsService->getApplicantsCourses( $request->courseId);
-        return  view('admin.course-applicants', compact('applicants'));
-
-    }
-    public function dropRecommendedApplicants($accountId)
-    {
         try {
-            if ($this->applicantService->dropRecommendedApplicant($accountId)) {
+            $applicants = $this->applicantsService->getApplicantsCourses($request->courseId);
+            return  view('admin.course-applicants', compact('applicants'));
+        } catch (Exception $e) {
+            Log::alert($e->getMessage());
+        }
+    }
+    public function dropRecommendedApplicants(Request $request)
+    {
+        Log::alert($request->accountId);
+        try {
+            if ($this->applicantService->dropRecommendedApplicant($request->accountId)) {
                 return response()->json(['success' => true]);
             }
         } catch (Exception $e) {
