@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\DropRecommendedApplicantRequest;
 use App\Http\Requests\Admin\RecommendApplicantRequest;
 use App\Models\Application;
 use App\Services\Admin\ApplicantService;
@@ -44,11 +45,11 @@ class ApplicantController extends Controller
             Log::alert($e->getMessage());
         }
     }
-    public function dropRecommendedApplicants(Request $request)
+    public function dropRecommendedApplicants(DropRecommendedApplicantRequest $request)
     {
-        Log::alert($request->accountId);
+
         try {
-            if ($this->applicantService->dropRecommendedApplicant($request->accountId)) {
+            if ($this->applicantService->dropRecommendedApplicant($request->validated())) {
                 return response()->json(['success' => true]);
             }
         } catch (Exception $e) {
