@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\RecommendApplicantRequest;
 use App\Models\Application;
 use App\Services\Admin\ApplicantService;
+use App\Services\Admin\Reports\ApplicantsService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Log;
 
 class ApplicantController extends Controller
 {
-    public function __construct(protected ApplicantService $applicantService)
+    public function __construct(protected ApplicantService $applicantService, protected  ApplicantsService $applicantsService)
     {
     }
     public function recommend(RecommendApplicantRequest $request)
@@ -32,6 +33,13 @@ class ApplicantController extends Controller
         $recommendedApplicants = Application::where(['department_id' => Auth::guard('admin')
             ->user()->department_id, 'remark' => 'Qualify for Admission'])->get();
         return view('admin.recommended-applicants', ['recommendedApplicants' => $recommendedApplicants]);
+    }
+    public function searchCourseApplicants(Request $request)
+    {
+
+        $applicants = $this->applicantsService->getApplicantsCourses( $request->courseId);
+        return  view('admin.course-applicants', compact('applicants'));
+
     }
     public function dropRecommendedApplicants($accountId)
     {
