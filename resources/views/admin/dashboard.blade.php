@@ -113,7 +113,7 @@
 
                                     </select>
 
-                                    <button type="submit" class="btn btn-primary mb-2 search-course" >Search</button>
+                                    <button type="submit" class="btn btn-primary mb-2 search-course">Search</button>
                                 </form>
                             </div>
                         </div>
@@ -129,7 +129,8 @@
 
 
 
-                </div>            @else
+                </div>
+            @else
                 <div class="row">
                     <div class="col-md-12 grid-margin stretch-card">
                         <div class="card">
@@ -259,7 +260,9 @@
                                                                         value="{{ $application->account_id }}">
                                                                 </div>
                                                             </td>
-
+                                                            <td>
+                                                                <div class="row message-container"></div>
+                                                            </td>
 
                                                         </tr>
                                                     @endforeach
