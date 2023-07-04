@@ -105,8 +105,7 @@
                                 </p>
                                 <form class="form-inline">
                                     <label class="sr-only" for="inlineFormInputName2">Courses</label>
-                                    <select class="form-control mb-6 mr-sm-4" id="inlineFormInputName2"
-                                        placeholder="Jane Doe">
+                                    <select class="form-control mb-6 mr-sm-4" name="courseId" id="course_id">
                                         <option value="" selected>Select Courses</option>
                                         @foreach ($courses as $course)
                                             <option value="{{ $course->id }}">{{ $course->course_name }}</option>
@@ -114,7 +113,7 @@
 
                                     </select>
 
-                                    <button type="submit" class="btn btn-primary mb-2">Search</button>
+                                    <button type="submit" class="btn btn-primary mb-2 search-course" >Search</button>
                                 </form>
                             </div>
                         </div>
@@ -122,7 +121,15 @@
 
 
                 </div>
-            @else
+
+
+                <div id="result">
+
+
+
+
+
+                </div>            @else
                 <div class="row">
                     <div class="col-md-12 grid-margin stretch-card">
                         <div class="card">
