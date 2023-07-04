@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UpdateAdminDetailsRequest;
 use App\Http\Requests\Admin\UpdateAdminPasswordRequest;
+use App\Models\Course;
+use App\Models\Department;
 use App\Services\Admin\Reports\ApplicantsService;
 use App\Services\Admin\UpdateAdminDetailsService;
 use App\Services\Admin\UpdateAdminPasswordService;
 use Exception;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
@@ -25,10 +27,12 @@ class AdminController extends Controller
     public function dashboard()
     {
         $applicants = $this->applicants->getApplicants();
+        $courses = Course::where(['department_id' => Auth::guard('admin')->user()->department_id])->get();
 
 
         $data = array(
             'applicants' => $applicants,
+            'courses' => $courses,
 
         );
         return view('admin.dashboard')->with($data);
