@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\DropRecommendedApplicantRequest;
 use App\Http\Requests\Admin\RecommendApplicantRequest;
 use App\Models\Application;
+use App\Models\Course;
 use App\Services\Admin\ApplicantService;
 use App\Services\Admin\Reports\ApplicantsService;
 use Exception;
@@ -33,7 +34,8 @@ class ApplicantController extends Controller
     {
         $recommendedApplicants = Application::where(['department_id' => Auth::guard('admin')
             ->user()->department_id, 'remark' => 'Qualify for Admission'])->get();
-        return view('admin.recommended-applicants', ['recommendedApplicants' => $recommendedApplicants]);
+        $courses = Course::where(['department_id' => Auth::guard('admin')->user()->department_id])->get();
+        return view('admin.recommended-applicants', ['recommendedApplicants' => $recommendedApplicants, 'courses' => $courses]);
     }
     public function searchCourseApplicants(Request $request)
     {
@@ -41,6 +43,16 @@ class ApplicantController extends Controller
         try {
             $applicants = $this->applicantsService->getApplicantsCourses($request->courseId);
             return  view('admin.course-applicants', compact('applicants'));
+        } catch (Exception $e) {
+            Log::alert($e->getMessage());
+        }
+    }
+    public function searchRecommendedApplicantsCourse(Request $request)
+    {
+
+        try {
+            $recommendedApplicants = $this->applicantsService->getRecommendedApplicantsCourse($request->courseId);
+            return  view('admin.recommended-course-applicants', compact('recommendedApplicants'));
         } catch (Exception $e) {
             Log::alert($e->getMessage());
         }
