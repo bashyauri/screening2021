@@ -16,7 +16,8 @@
                 </a>
                 <div class="collapse" id="ui-basic">
                     <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"> <a class="nav-link" href="{{ url('') }}">Personal Details</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ url('') }}">Shortlist Candidates</a>
+                        </li>
                         <li class="nav-item"> <a class="nav-link" href="{{ url('') }}">Business Details</a></li>
                         <li class="nav-item"> <a class="nav-link" href="{{ url('') }}">Bank Details</a></li>
                     </ul>
@@ -49,7 +50,10 @@
             </a>
             <div class="collapse" id="form-elements">
                 <ul class="nav flex-column sub-menu">
-
+                    <li class="nav-item"><a class="nav-link" href="{{ url('admin/dashboard') }}">Not
+                            Recommended
+                        </a>
+                    </li>
                     <li class="nav-item"><a class="nav-link"
                             href="{{ url('admin/recommended-applicants') }}">Recommended
                         </a>
