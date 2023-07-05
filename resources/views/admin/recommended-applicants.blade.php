@@ -29,93 +29,133 @@
                     </div>
                 </div>
             </div>
+            @if (count($courses) > 1)
+                <div class="row">
+                    <div class="col-md-8 stretch-card grid-margin">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Search Course</h4>
+                                <p class="card-description">
+                                    Use the <code>.form-inline</code> class to display a series of labels, form controls,
+                                    and buttons on a single horizontal row
+                                </p>
+                                <form class="form-inline">
+                                    <label class="sr-only" for="inlineFormInputName2">Courses</label>
+                                    <select class="form-control mb-6 mr-sm-4" name="courseId" id="course_id">
+                                        <option value="" selected>Select Courses</option>
+                                        @foreach ($courses as $course)
+                                            <option value="{{ $course->id }}">{{ $course->course_name }}</option>
+                                        @endforeach
 
-            <div class="row">
-                <div class="col-md-12 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
+                                    </select>
 
-                            @if (Session::has('error_message'))
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    <strong>Error</strong> {{ Session::get('error_message') }}
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            @endif
-                            @if (Session::has('success_message'))
-                                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    <strong>Success</strong> {{ Session::get('success_message') }}
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            @endif
-
-                            @if ($errors->any())
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-
-                                </div>
-                            @endif
+                                    <button type="submit"
+                                        class="btn btn-primary mb-2 search-recommended-applicants">Search</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
 
 
-                            <a href="{{ url('admin/convert-to-docx') }}" class="btn btn-primary float-right">Export</a>
-                            <p class="card-title">List of Recommended Applicants</p>
+                </div>
 
-                            <div class="row">
 
-                                <div class="col-12">
-                                    <div class="table-responsive">
-                                        <table class="display expandable-table" style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>#
-                                                    </th>
-                                                    <th>Surname</th>
-                                                    <th>First Name</th>
-                                                    <th>Middle Name</th>
-                                                    <th>Phone number</th>
-                                                    <th>Remark</th>
-                                                    <th>Drop</th>
+                <div id="recommended-result">
 
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($recommendedApplicants as $index => $applicant)
+
+
+
+
+                </div>
+            @else
+                <div class="row">
+                    <div class="col-md-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+
+                                @if (Session::has('error_message'))
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        <strong>Error</strong> {{ Session::get('error_message') }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                @endif
+                                @if (Session::has('success_message'))
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <strong>Success</strong> {{ Session::get('success_message') }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                @endif
+
+                                @if ($errors->any())
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+
+                                    </div>
+                                @endif
+
+
+                                <a href="{{ url('admin/convert-to-docx') }}" class="btn btn-primary float-right">Export</a>
+                                <p class="card-title">List of Recommended Applicants</p>
+
+                                <div class="row">
+
+                                    <div class="col-12">
+                                        <div class="table-responsive">
+                                            <table class="display expandable-table" style="width:100%">
+                                                <thead>
                                                     <tr>
-                                                        <td>{{ $index + 1 }}</td>
-                                                        <td>{{ $applicant->surname }}</td>
-                                                        <td>{{ $applicant->firstname }}</td>
-                                                        <td>{{ $applicant->m_name }}</td>
-                                                        <td>{{ $applicant->p_number }}</td>
-                                                        <td>{{ $applicant->remark }}</td>
+                                                        <th>#
+                                                        </th>
+                                                        <th>Surname</th>
+                                                        <th>First Name</th>
+                                                        <th>Middle Name</th>
+                                                        <th>Phone number</th>
+                                                        <th>Remark</th>
+                                                        <th>Drop</th>
 
-
-                                                        <td><input type="checkbox" name="drop-applicant"
-                                                                class="drop-checkbox" value="{{ $applicant->account_id }}">
-                                                        </td>
-                                                        <td class="message-container"></td>
+                                                        <th></th>
                                                     </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($recommendedApplicants as $index => $applicant)
+                                                        <tr>
+                                                            <td>{{ $index + 1 }}</td>
+                                                            <td>{{ $applicant->surname }}</td>
+                                                            <td>{{ $applicant->firstname }}</td>
+                                                            <td>{{ $applicant->m_name }}</td>
+                                                            <td>{{ $applicant->p_number }}</td>
+                                                            <td>{{ $applicant->remark }}</td>
+
+
+                                                            <td><input type="checkbox" name="drop-applicant"
+                                                                    class="drop-checkbox"
+                                                                    value="{{ $applicant->account_id }}">
+                                                            </td>
+                                                            <td class="message-container"></td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
 
 
 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endif
         </div>
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
