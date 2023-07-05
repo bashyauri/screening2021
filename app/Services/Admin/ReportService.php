@@ -2,6 +2,7 @@
 
 namespace App\Services\Admin;
 
+use App\Models\Course;
 use App\Models\Department;
 use App\Services\Admin\Reports\ApplicantsService;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +19,9 @@ class ReportService
     public function convertToDocx()
     {
         /// Assuming you have already initialized the PHPWord object
+        $course = Course::where(['department_id' => Auth::guard('admin')->user()->department_id])->count();
         $recommendedApplicants = $this->applicantService->getRecommendedApplicants();
+
         $phpWord = new PhpWord();
 
         // Create a section
@@ -66,6 +69,10 @@ class ReportService
         $headerRow->addCell(1500)->addText('Phone number');
         $headerRow->addCell(1500)->addText('State');
         $headerRow->addCell(1500)->addText('LGA');
+        if ($course > 1) {
+            $headerRow->addCell(1500)->addText('Course');
+        }
+
         $headerRow->addCell(1500)->addText('SSCE');
         $headerRow->addCell(1500)->addText('Remark');
 
@@ -79,6 +86,9 @@ class ReportService
             $row->addCell(1500)->addText($applicant->p_number);
             $row->addCell(1500)->addText($applicant->name);
             $row->addCell(1500)->addText($applicant->lga);
+            if ($course > 1) {
+                $row->addCell(1500)->addText($applicant->course_name);
+            }
 
             $grades = $applicant->exam_grades->chunk(2);
             $examGradesCell = $row->addCell(7000); // Adjust the cell width as desired
