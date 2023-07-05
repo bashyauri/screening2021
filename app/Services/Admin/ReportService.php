@@ -8,6 +8,7 @@ use App\Services\Admin\Reports\ApplicantsService;
 use Illuminate\Support\Facades\Auth;
 use PhpOffice\PhpWord\PhpWord;
 
+
 /**
  * Class ReportService.
  */
@@ -26,7 +27,9 @@ class ReportService
 
         // Create a section
         $section = $phpWord->addSection();
+
         $section->setOrientation('landscape');
+
         // Add an image at the beginning of the page
         $imagePath = 'assets/img/logos/logo-ct.png';
         $section->addImage($imagePath, array(
