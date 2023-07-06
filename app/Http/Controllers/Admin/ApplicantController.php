@@ -63,7 +63,7 @@ class ApplicantController extends Controller
             $recommendedApplicants = $this->applicantsService->getRecommendedApplicantsCourse($request->courseId);
             return  view('admin.recommended-course-applicants', compact('recommendedApplicants'));
         } catch (Exception $e) {
-            Log::alert($e->getMessage());
+          return  Log::alert($e->getMessage());
         }
     }
     public function dropRecommendedApplicants(DropRecommendedApplicantRequest $request)
@@ -74,7 +74,7 @@ class ApplicantController extends Controller
                 return response()->json(['success' => true]);
             }
         } catch (Exception $e) {
-            Log::alert($e->getMessage());
+           return Log::alert($e->getMessage());
         }
     }
 }
