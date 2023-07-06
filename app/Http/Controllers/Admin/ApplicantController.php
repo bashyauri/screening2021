@@ -13,6 +13,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\View\View;
 
 class ApplicantController extends Controller
 {
@@ -30,13 +31,20 @@ class ApplicantController extends Controller
             return redirect()->back()->withErrors(['error_message' => 'Something went wrong']);
         }
     }
-    public function getRecommendedApplicants()
+    public function getRecommendedApplicants() : View
     {
         $recommendedApplicants = Application::where(['department_id' => Auth::guard('admin')
             ->user()->department_id, 'remark' => 'Qualify for Admission'])->get();
-        $courses = Course::where(['department_id' => Auth::guard('admin')->user()->department_id])->get();
+        $courses = Course::where(['department_id' => Auth::guard('admin')->user()->department_id])?->get();
+        if(Auth::guard('admin')->user()->roles->contains('name','superadmin')){
+            $recommendedApplicants = Application::where(['remark' => 'Qualify for Admission'])->get();
+
+
+
+        }
         return view('admin.recommended-applicants', ['recommendedApplicants' => $recommendedApplicants, 'courses' => $courses]);
     }
+
     public function searchCourseApplicants(Request $request)
     {
 
