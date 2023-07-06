@@ -52,7 +52,8 @@ class ApplicantController extends Controller
             $applicants = $this->applicantsService->getApplicantsCourses($request->courseId);
             return  view('admin.course-applicants', compact('applicants'));
         } catch (Exception $e) {
-            Log::alert($e->getMessage());
+           return Log::alert($e->getMessage());
+
         }
     }
     public function searchRecommendedApplicantsCourse(Request $request)
