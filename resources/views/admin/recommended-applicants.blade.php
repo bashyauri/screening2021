@@ -120,7 +120,12 @@
                                                         <th>Middle Name</th>
                                                         <th>Phone number</th>
                                                         <th>Remark</th>
-                                                        <th>Drop</th>
+                                                        @if (Auth::guard('admin')->user()->roles->contains('name','superadmin'))
+                                                            <th>Shortlist</th>
+                                                        @else
+                                                            <th>Drop</th>
+                                                        @endif
+
 
                                                         <th></th>
                                                     </tr>
@@ -134,12 +139,20 @@
                                                             <td>{{ $applicant->m_name }}</td>
                                                             <td>{{ $applicant->p_number }}</td>
                                                             <td>{{ $applicant->remark }}</td>
+                                                            // Check if logged in as superadmin shortlist else drop
+                                                            @if (Auth::guard('admin')->user()->roles->contains('name','superadmin'))
+                                                                <td><input type="checkbox" name="short-list"
+                                                                           class="drop-checkbox"
+                                                                           value="{{ $applicant->account_id }}">
+                                                                </td>
+                                                            @else
+                                                                <td><input type="checkbox" name="drop-applicant"
+                                                                           class="drop-checkbox"
+                                                                           value="{{ $applicant->account_id }}">
+                                                                </td>
+                                                            @endif
 
 
-                                                            <td><input type="checkbox" name="drop-applicant"
-                                                                    class="drop-checkbox"
-                                                                    value="{{ $applicant->account_id }}">
-                                                            </td>
                                                             <td class="message-container"></td>
                                                         </tr>
                                                     @endforeach
