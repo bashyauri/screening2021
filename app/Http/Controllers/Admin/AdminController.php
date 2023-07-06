@@ -26,6 +26,7 @@ class AdminController extends Controller
     }
     public function dashboard()
     {
+
         $applicants = $this->applicants->getApplicants();
         $courses = Course::where(['department_id' => Auth::guard('admin')->user()->department_id])->get();
 

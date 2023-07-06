@@ -6,7 +6,8 @@
                 <span class="menu-title">Dashboard</span>
             </a>
         </li>
-        @if (Auth::guard('admin')->user()->role == 'superadmin')
+
+        @if (Auth::guard('admin')->user()->roles->contains('name','superadmin'))
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
                     aria-controls="ui-basic">
@@ -23,15 +24,15 @@
                     </ul>
                 </div>
             </li>
-        @else
+
             <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
+                <a class="nav-link" data-toggle="collapse" href="#password-basic" aria-expanded="false"
                     aria-controls="ui-basic">
                     <i class="icon-layout menu-icon"></i>
                     <span class="menu-title">Settings</span>
                     <i class="menu-arrow"></i>
                 </a>
-                <div class="collapse" id="ui-basic">
+                <div class="collapse" id="password-basic">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item"> <a class="nav-link" href="{{ url('admin/get-admin-password') }}">Update
                                 Password</a></li>
@@ -40,7 +41,7 @@
                     </ul>
                 </div>
             </li>
-        @endif
+        @else
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
                 aria-controls="form-elements">
@@ -64,6 +65,7 @@
                 </ul>
             </div>
         </li>
+        @endif
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
                 <i class="icon-bar-graph menu-icon"></i>
