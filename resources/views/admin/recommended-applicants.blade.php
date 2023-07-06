@@ -121,6 +121,7 @@
                                                         <th>Phone number</th>
                                                         <th>Remark</th>
                                                         @if (Auth::guard('admin')->user()->roles->contains('name','superadmin'))
+                                                            <th>Department</th>
                                                             <th>Shortlist</th>
                                                         @else
                                                             <th>Drop</th>
@@ -139,8 +140,9 @@
                                                             <td>{{ $applicant->m_name }}</td>
                                                             <td>{{ $applicant->p_number }}</td>
                                                             <td>{{ $applicant->remark }}</td>
-                                                            // Check if logged in as superadmin shortlist else drop
+{{--                                                            Check if logged in as superadmin shortlist else drop--}}
                                                             @if (Auth::guard('admin')->user()->roles->contains('name','superadmin'))
+                                                                <td>{{ $applicant->department?->department_name }}</td>
                                                                 <td><input type="checkbox" name="short-list"
                                                                            class="drop-checkbox"
                                                                            value="{{ $applicant->account_id }}">
