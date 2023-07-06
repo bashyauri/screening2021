@@ -17,7 +17,7 @@
                 </a>
                 <div class="collapse" id="ui-basic">
                     <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"> <a class="nav-link" href="{{ url('#') }}">Shortlist Candidates</a>
+                        <li class="nav-item"> <a class="nav-link" href="{{ url('admin/recommended-applicants') }}">Shortlist</a>
                         </li>
                         <li class="nav-item"> <a class="nav-link" href="{{ url('#') }}">Drop Candidate</a></li>
                         <li class="nav-item"> <a class="nav-link" href="{{ url('#') }}">Bank Details</a></li>
