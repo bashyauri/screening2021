@@ -12,15 +12,15 @@
                 <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
                     aria-controls="ui-basic">
                     <i class="icon-layout menu-icon"></i>
-                    <span class="menu-title">Admin Details</span>
+                    <span class="menu-title">Applicants</span>
                     <i class="menu-arrow"></i>
                 </a>
                 <div class="collapse" id="ui-basic">
                     <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"> <a class="nav-link" href="{{ url('') }}">Shortlist Candidates</a>
+                        <li class="nav-item"> <a class="nav-link" href="{{ url('#') }}">Shortlist Candidates</a>
                         </li>
-                        <li class="nav-item"> <a class="nav-link" href="{{ url('') }}">Business Details</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="{{ url('') }}">Bank Details</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ url('#') }}">Drop Candidate</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ url('#') }}">Bank Details</a></li>
                     </ul>
                 </div>
             </li>
