@@ -31,16 +31,13 @@ class ApplicantController extends Controller
             return redirect()->back()->withErrors(['error_message' => 'Something went wrong']);
         }
     }
-    public function getRecommendedApplicants() : View
+    public function getRecommendedApplicants(): View
     {
         $recommendedApplicants = Application::where(['department_id' => Auth::guard('admin')
             ->user()->department_id, 'remark' => 'Qualify for Admission'])->get();
         $courses = Course::where(['department_id' => Auth::guard('admin')->user()->department_id])?->get();
-        if(Auth::guard('admin')->user()->roles->contains('name','superadmin')){
+        if (Auth::guard('admin')->user()->roles->contains('name', 'superadmin')) {
             $recommendedApplicants = Application::where(['remark' => 'Qualify for Admission'])->get();
-
-
-
         }
         return view('admin.recommended-applicants', ['recommendedApplicants' => $recommendedApplicants, 'courses' => $courses]);
     }
@@ -52,8 +49,7 @@ class ApplicantController extends Controller
             $applicants = $this->applicantsService->getApplicantsCourses($request->courseId);
             return  view('admin.course-applicants', compact('applicants'));
         } catch (Exception $e) {
-           return Log::alert($e->getMessage());
-
+            return Log::alert($e->getMessage());
         }
     }
     public function searchRecommendedApplicantsCourse(Request $request)
@@ -63,7 +59,7 @@ class ApplicantController extends Controller
             $recommendedApplicants = $this->applicantsService->getRecommendedApplicantsCourse($request->courseId);
             return  view('admin.recommended-course-applicants', compact('recommendedApplicants'));
         } catch (Exception $e) {
-          return  Log::alert($e->getMessage());
+            return  Log::alert($e->getMessage());
         }
     }
     public function dropRecommendedApplicants(DropRecommendedApplicantRequest $request)
@@ -74,7 +70,17 @@ class ApplicantController extends Controller
                 return response()->json(['success' => true]);
             }
         } catch (Exception $e) {
-           return Log::alert($e->getMessage());
+            return Log::alert($e->getMessage());
+        }
+    }
+    public function shortlistApplicants(Request $request)
+    {
+        try {
+            if ($this->applicantService->shortlist($request->validated())) {
+                return response()->json(['success' => true]);
+            }
+        } catch (Exception $e) {
+            return Log::alert($e->getMessage());
         }
     }
 }
