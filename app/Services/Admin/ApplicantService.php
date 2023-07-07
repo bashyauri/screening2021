@@ -31,4 +31,12 @@ class ApplicantService
                 'comment' => null,
             ]);
     }
+    public function shortlist($accountId)
+    {
+        return Application::where('account_id', $accountId)
+            ->update([
+
+                'remark' => 'shortlisted',
+            ]);
+    }
 }
