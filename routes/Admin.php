@@ -29,6 +29,8 @@ Route::prefix('admin')->group(function () {
         Route::get('/convert-to-docx', [ReportController::class, 'exportToDocx']);
         Route::get('/search-course-applicants', [ApplicantController::class, 'searchCourseApplicants']);
         Route::get('/search-recommended-applicants-course', [ApplicantController::class, 'searchRecommendedApplicantsCourse']);
+        Route::get('/search-recommended-by-department', [ApplicantController::class, 'searchRecommendedApplicantsDepartment']);
+
 
 
         Route::get('/logout', [AdminLogoutController::class, 'logout']);
