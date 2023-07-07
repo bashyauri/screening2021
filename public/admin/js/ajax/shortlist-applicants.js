@@ -6,7 +6,7 @@ $(document).ready(function () {
 
         // Send AJAX request to update the table based on the account_id and checkbox state
         $.ajax({
-            url: "drop-applicants", // Replace with your Laravel route
+            url: "shortlist-applicants", // Replace with your Laravel route
             method: "POST", // or 'GET' depending on your route configuration
             data: {
                 _token: $('meta[name="csrf-token"]').attr("content"),
@@ -16,7 +16,7 @@ $(document).ready(function () {
             success: function (response) {
                 console.log(accountId);
                 messageContainer
-                    .text("dropped successfully")
+                    .text("shortlisted successfully")
                     .removeClass("error")
                     .addClass("success text-success");
                 // Handle the response and update the table as needed
@@ -25,7 +25,7 @@ $(document).ready(function () {
             error: function (xhr, status, error) {
                 // Handle error if any
                 messageContainer
-                    .text("dropping failed")
+                    .text("shortlisting failed")
                     .removeClass("success")
                     .addClass("error text-danger");
             },
