@@ -127,8 +127,9 @@
     <script src="{{ url('admin/js/custom.js') }}"></script>
     <script src="{{ url('admin/js/ajax.js') }}"></script>
     <script src="{{ url('admin/js/ajax/drop-applicants.js') }}"></script>
+    <script src="{{ url('admin/js/ajax/shortlist-applicants.js') }}"></script>
     <script src="{{ url('admin/js/ajax/recommend-applicants.js') }}"></script>
-    <script src="{{ url('admin/js/ajax/serch-recommended-applicants.js') }}"></script>
+    <script src="{{ url('admin/js/ajax/search-recommended-applicants.js') }}"></script>
     <script src="{{ url('admin/js/ajax/search-course-applicants.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
