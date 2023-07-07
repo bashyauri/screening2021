@@ -1,0 +1,56 @@
+{
+    "name": "timwassenburg/laravel-service-generator",
+    "description": "Generate Laravel services",
+    "keywords": [
+        "generator",
+        "php",
+        "cli",
+        "laravel",
+        "artisan",
+        "services",
+        "pattern"
+    ],
+    "homepage": "https://github.com/timwassenburg/laravel-service-generator",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tim Wassenburg"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "TimWassenburg\\ServiceGenerator\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "TimWassenburg\\ServiceGenerator\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
+        "analyse": "vendor/bin/phpstan analyse",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "TimWassenburg\\ServiceGenerator\\Http\\Providers\\CommandServiceProvider",
+                "TimWassenburg\\ServiceGenerator\\ServiceGeneratorServiceProvider"
+            ]
+        }
+    },
+    "require-dev": {
+        "pestphp/pest": "^2.5",
+        "orchestra/testbench": "^8.5",
+        "laravel/pint": "^1.10",
+        "nunomaduro/larastan": "^2.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}
