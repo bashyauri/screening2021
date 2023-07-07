@@ -102,9 +102,10 @@
                                     </div>
                                 @endif
 
-                               @if (Auth::guard('admin')->user()->roles->contains('name','admin'))
-                                <a href="{{ url('admin/convert-to-docx') }}" class="btn btn-primary float-right">Export</a>
-                                @else
+                                @if (Auth::guard('admin')->user()->roles->contains('name', 'admin'))
+                                    <a href="{{ url('admin/convert-to-docx') }}"
+                                        class="btn btn-primary float-right">Export</a>
+                                @endif
                                 <p class="card-title">List of Recommended Applicants</p>
 
                                 <div class="row">
@@ -121,7 +122,7 @@
                                                         <th>Middle Name</th>
                                                         <th>Phone number</th>
                                                         <th>Remark</th>
-                                                        @if (Auth::guard('admin')->user()->roles->contains('name','superadmin'))
+                                                        @if (Auth::guard('admin')->user()->roles->contains('name', 'superadmin'))
                                                             <th>Department</th>
                                                             <th>Shortlist</th>
                                                         @else
@@ -141,17 +142,17 @@
                                                             <td>{{ $applicant->m_name }}</td>
                                                             <td>{{ $applicant->p_number }}</td>
                                                             <td>{{ $applicant->remark }}</td>
-{{--                                                            Check if logged in as superadmin shortlist else drop--}}
-                                                            @if (Auth::guard('admin')->user()->roles->contains('name','superadmin'))
+                                                            {{--                                                            Check if logged in as superadmin shortlist else drop --}}
+                                                            @if (Auth::guard('admin')->user()->roles->contains('name', 'superadmin'))
                                                                 <td>{{ $applicant->department?->department_name }}</td>
                                                                 <td><input type="checkbox" name="short-list"
-                                                                           class="shortlist-checkbox"
-                                                                           value="{{ $applicant->account_id }}">
+                                                                        class="shortlist-checkbox"
+                                                                        value="{{ $applicant->account_id }}">
                                                                 </td>
                                                             @else
                                                                 <td><input type="checkbox" name="drop-applicant"
-                                                                           class="drop-checkbox"
-                                                                           value="{{ $applicant->account_id }}">
+                                                                        class="drop-checkbox"
+                                                                        value="{{ $applicant->account_id }}">
                                                                 </td>
                                                             @endif
 
