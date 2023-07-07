@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\DropRecommendedApplicantRequest;
 use App\Http\Requests\Admin\RecommendApplicantRequest;
+use App\Http\Requests\Admin\ShortlistRequest;
 use App\Models\Application;
 use App\Models\Course;
 use App\Models\Department;
@@ -91,7 +92,7 @@ class ApplicantController extends Controller
             return Log::alert($e->getMessage());
         }
     }
-    public function shortlistApplicants(Request $request)
+    public function shortlistApplicants(ShortlistRequest $request)
     {
         try {
             if ($this->applicantService->shortlist($request->validated())) {
