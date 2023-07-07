@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\DropRecommendedApplicantRequest;
 use App\Http\Requests\Admin\RecommendApplicantRequest;
 use App\Models\Application;
 use App\Models\Course;
+use App\Models\Department;
 use App\Services\Admin\ApplicantService;
 use App\Services\Admin\Reports\ApplicantsService;
 use Exception;
@@ -35,12 +36,17 @@ class ApplicantController extends Controller
     {
         $recommendedApplicants = Application::where(['department_id' => Auth::guard('admin')
             ->user()->department_id, 'remark' => 'Qualify for Admission'])->get();
-        $courses = Course::where(['department_id' => Auth::guard('admin')->user()->department_id])?->get();
+
+        // if logged as superadmin user
         if (Auth::guard('admin')->user()->roles->contains('name', 'superadmin')) {
+
             $recommendedApplicants = Application::where(['remark' => 'Qualify for Admission'])->get();
+            return view('admin.shortlist-applicants', ['recommendedApplicants' => $recommendedApplicants, 'departments' => Department::get(['id', 'department_name'])]);
         }
+        $courses = Course::where(['department_id' => Auth::guard('admin')->user()->department_id])?->get();
         return view('admin.recommended-applicants', ['recommendedApplicants' => $recommendedApplicants, 'courses' => $courses]);
     }
+
 
     public function searchCourseApplicants(Request $request)
     {
@@ -58,6 +64,18 @@ class ApplicantController extends Controller
         try {
             $recommendedApplicants = $this->applicantsService->getRecommendedApplicantsCourse($request->courseId);
             return  view('admin.recommended-course-applicants', compact('recommendedApplicants'));
+        } catch (Exception $e) {
+            return  Log::alert($e->getMessage());
+        }
+    }
+    public function searchRecommendedApplicantsDepartment(Request $request)
+    {
+
+        try {
+            $data['recommendedApplicants'] = Application::where(['department_id' => $request->departmentId, 'remark' => 'Qualify for Admission'])->get();
+
+
+            return  view('admin.recommended-department-applicants')->with($data);
         } catch (Exception $e) {
             return  Log::alert($e->getMessage());
         }
