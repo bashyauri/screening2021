@@ -67,6 +67,7 @@
     <script src="{{ url('admin/js/ajax/recommend-applicants.js') }}"></script>
     <script src="{{ url('admin/js/ajax/search-course-applicants.js') }}"></script>
     <script src="{{ url('admin/js/ajax/search-recommended-applicants.js') }}"></script>
+    <script src="{{ url('admin/js/ajax/search-by-department.js') }}"></script>
     <!-- End Custom Admin Js-->
 
 </body>
