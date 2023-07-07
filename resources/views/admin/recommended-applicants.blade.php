@@ -102,8 +102,9 @@
                                     </div>
                                 @endif
 
-
+                               @if (Auth::guard('admin')->user()->roles->contains('name','admin'))
                                 <a href="{{ url('admin/convert-to-docx') }}" class="btn btn-primary float-right">Export</a>
+                                @else
                                 <p class="card-title">List of Recommended Applicants</p>
 
                                 <div class="row">
@@ -144,7 +145,7 @@
                                                             @if (Auth::guard('admin')->user()->roles->contains('name','superadmin'))
                                                                 <td>{{ $applicant->department?->department_name }}</td>
                                                                 <td><input type="checkbox" name="short-list"
-                                                                           class="drop-checkbox"
+                                                                           class="shortlist-checkbox"
                                                                            value="{{ $applicant->account_id }}">
                                                                 </td>
                                                             @else
