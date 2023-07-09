@@ -10,7 +10,7 @@ class Admin extends Authenticatable
     use Notifiable;
 
     protected $table = 'admins';
-    protected $guarded=['id'];
+    protected $guarded = ['id'];
 
     public function roles()
     {
