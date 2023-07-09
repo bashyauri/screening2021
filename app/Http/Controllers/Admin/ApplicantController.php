@@ -73,7 +73,7 @@ class ApplicantController extends Controller
     {
 
         try {
-            $data['recommendedApplicants'] = Application::where(['department_id' => $request->departmentId, 'remark' => 'Qualify for Admission'])->get();
+            $data['recommendedApplicants'] = Application::with('department')->where(['department_id' => $request->departmentId, 'remark' => 'Qualify for Admission'])->get();
 
 
             return  view('admin.recommended-department-applicants')->with($data);
