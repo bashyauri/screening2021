@@ -113,6 +113,7 @@ class ComposerStaticInit78fef76e101fc8e03fea14a38c5072a1
         'N' => 
         array (
             'NunoMaduro\\Collision\\' => 21,
+            'NotificationChannels\\Nigeriabulksms\\' => 36,
         ),
         'M' => 
         array (
@@ -389,6 +390,10 @@ class ComposerStaticInit78fef76e101fc8e03fea14a38c5072a1
         array (
             0 => __DIR__ . '/..' . '/nunomaduro/collision/src',
         ),
+        'NotificationChannels\\Nigeriabulksms\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/ossycodes/nigeriabulksms/src',
+        ),
         'Monolog\\' => 
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
@@ -582,6 +587,7 @@ class ComposerStaticInit78fef76e101fc8e03fea14a38c5072a1
         'App\\Http\\Controllers\\Admin\\ApplicantController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ApplicantController.php',
         'App\\Http\\Controllers\\Admin\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/AuthController.php',
         'App\\Http\\Controllers\\Admin\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/LoginController.php',
+        'App\\Http\\Controllers\\Admin\\ReportController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ReportController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\LogoutController' => __DIR__ . '/../..' . '/app/Http/Controllers/LogoutController.php',
         'App\\Http\\Controllers\\PrintForm' => __DIR__ . '/../..' . '/app/Http/Controllers/PrintForm.php',
@@ -616,8 +622,10 @@ class ComposerStaticInit78fef76e101fc8e03fea14a38c5072a1
         'App\\Http\\Middleware\\TrustHosts' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustHosts.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Http\\Requests\\Admin\\DropRecommendedApplicantRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Admin/DropRecommendedApplicantRequest.php',
         'App\\Http\\Requests\\Admin\\LoginRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Admin/LoginRequest.php',
         'App\\Http\\Requests\\Admin\\RecommendApplicantRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Admin/RecommendApplicantRequest.php',
+        'App\\Http\\Requests\\Admin\\ShortlistRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Admin/ShortlistRequest.php',
         'App\\Http\\Requests\\Admin\\UpdateAdminDetailsRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Admin/UpdateAdminDetailsRequest.php',
         'App\\Http\\Requests\\Admin\\UpdateAdminPasswordRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Admin/UpdateAdminPasswordRequest.php',
         'App\\Models\\Admin' => __DIR__ . '/../..' . '/app/Models/Admin.php',
@@ -644,6 +652,7 @@ class ComposerStaticInit78fef76e101fc8e03fea14a38c5072a1
         'App\\Rules\\ImageNotRequiredIfFilenameExists' => __DIR__ . '/../..' . '/app/Rules/ImageNotRequiredIfFilenameExists.php',
         'App\\Services\\Admin\\ApplicantService' => __DIR__ . '/../..' . '/app/Services/Admin/ApplicantService.php',
         'App\\Services\\Admin\\LoginService' => __DIR__ . '/../..' . '/app/Services/Admin/LoginService.php',
+        'App\\Services\\Admin\\ReportService' => __DIR__ . '/../..' . '/app/Services/Admin/ReportService.php',
         'App\\Services\\Admin\\Reports\\ApplicantsService' => __DIR__ . '/../..' . '/app/Services/Admin/Reports/ApplicantsService.php',
         'App\\Services\\Admin\\UpdateAdminDetailsService' => __DIR__ . '/../..' . '/app/Services/Admin/UpdateAdminDetailsService.php',
         'App\\Services\\Admin\\UpdateAdminPasswordService' => __DIR__ . '/../..' . '/app/Services/Admin/UpdateAdminPasswordService.php',
@@ -3863,6 +3872,13 @@ class ComposerStaticInit78fef76e101fc8e03fea14a38c5072a1
         'Nette\\Utils\\UnknownImageFileException' => __DIR__ . '/..' . '/nette/utils/src/Utils/exceptions.php',
         'Nette\\Utils\\Validators' => __DIR__ . '/..' . '/nette/utils/src/Utils/Validators.php',
         'Normalizer' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/Resources/stubs/Normalizer.php',
+        'NotificationChannels\\Nigeriabulksms\\Exceptions\\CouldNotSendNotification' => __DIR__ . '/..' . '/ossycodes/nigeriabulksms/src/Exceptions/CouldNotSendNotification.php',
+        'NotificationChannels\\Nigeriabulksms\\Exceptions\\InvalidConfiguration' => __DIR__ . '/..' . '/ossycodes/nigeriabulksms/src/Exceptions/InvalidConfiguration.php',
+        'NotificationChannels\\Nigeriabulksms\\Exceptions\\InvalidPhonenumber' => __DIR__ . '/..' . '/ossycodes/nigeriabulksms/src/Exceptions/InvalidPhonenumber.php',
+        'NotificationChannels\\Nigeriabulksms\\NigeriabulksmsChannel' => __DIR__ . '/..' . '/ossycodes/nigeriabulksms/src/NigeriabulksmsChannel.php',
+        'NotificationChannels\\Nigeriabulksms\\NigeriabulksmsClient' => __DIR__ . '/..' . '/ossycodes/nigeriabulksms/src/NigeriabulksmsClient.php',
+        'NotificationChannels\\Nigeriabulksms\\NigeriabulksmsMessage' => __DIR__ . '/..' . '/ossycodes/nigeriabulksms/src/NigeriabulksmsMessage.php',
+        'NotificationChannels\\Nigeriabulksms\\NigeriabulksmsServiceProvider' => __DIR__ . '/..' . '/ossycodes/nigeriabulksms/src/NigeriabulksmsServiceProvider.php',
         'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider' => __DIR__ . '/..' . '/nunomaduro/collision/src/Adapters/Laravel/CollisionServiceProvider.php',
         'NunoMaduro\\Collision\\Adapters\\Laravel\\Commands\\TestCommand' => __DIR__ . '/..' . '/nunomaduro/collision/src/Adapters/Laravel/Commands/TestCommand.php',
         'NunoMaduro\\Collision\\Adapters\\Laravel\\ExceptionHandler' => __DIR__ . '/..' . '/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php',

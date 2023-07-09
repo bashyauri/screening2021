@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "654bc92bab250f8e0fd0f1616d9afaf2",
+    "content-hash": "8e224168397c8b385ef31e48d3fee4a0",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2564,6 +2564,61 @@
                 "source": "https://github.com/opis/closure/tree/3.6.3"
             },
             "time": "2022-01-27T09:35:39+00:00"
+        },
+        {
+            "name": "ossycodes/nigeriabulksms",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ossycodes/nigeriabulksms.git",
+                "reference": "6805b7ede90d070356ef83619a5a242a410b3042"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ossycodes/nigeriabulksms/zipball/6805b7ede90d070356ef83619a5a242a410b3042",
+                "reference": "6805b7ede90d070356ef83619a5a242a410b3042",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/notifications": "~5.5 || ~6.0 || ~7.0 || ~8.0",
+                "illuminate/support": "~5.5 || ~6.0 || ~7.0 || ~8.0",
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.0",
+                "phpunit/phpunit": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "NotificationChannels\\Nigeriabulksms\\NigeriabulksmsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "NotificationChannels\\Nigeriabulksms\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Osaigbovo Emmanuel",
+                    "email": "osaigbovoemmanuel1@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "This package makes it easy to send notifications via Nigeriabulksms with Laravel",
+            "homepage": "https://github.com/laravel-notification-channels/:package_name",
+            "support": {
+                "issues": "https://github.com/ossycodes/nigeriabulksms/issues",
+                "source": "https://github.com/ossycodes/nigeriabulksms/tree/v2.0.0"
+            },
+            "time": "2020-12-15T22:19:39+00:00"
         },
         {
             "name": "phenx/php-font-lib",
