@@ -3,11 +3,9 @@
 namespace App\Services\Admin;
 
 use App\Models\Application;
-use App\Notifications\SendSMS;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Notification;
+
 
 /**
  * Class ApplicantService.
