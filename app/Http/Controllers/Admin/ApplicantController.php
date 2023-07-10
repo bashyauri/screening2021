@@ -102,4 +102,9 @@ class ApplicantController extends Controller
             return Log::alert($e->getMessage());
         }
     }
+    public function getShortlistedApplicants()
+    {
+        $shortlistedApplicants = Application::with('department')->where(['remark' => 'shortlisted'])->orderBy('department_id')->get();
+        return view('admin.shortlisted-applicants', ['shortlistedApplicants' => $shortlistedApplicants]);
+    }
 }
