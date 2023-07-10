@@ -53,7 +53,7 @@ class ApplicantService
     {
         $fullName = $user->surname . ' ' . $user->firstname . ' ' . $user->m_name;
         $programme = User::find($user->account_id)->programme_id;
-        $programme_name = Programme::find($programme)->name;
+        $programme_name = Programme::find($programme)->abv;
         // Initialize variables ( set your variables here )
 
         $username = config('services.nigeriabulksms.username');
@@ -62,7 +62,7 @@ class ApplicantService
 
         $sender = config('services.nigeriabulksms.sender');
 
-        $message =  $fullName . '. You have  been offered provisional  admission to study  ' . $programme_name . 'in' . $user->department->department_name . ' at WUFEDPOLY. Kindly login to your account to generate remita for payment of Acceptance Fees and print your offer. Thanks';
+        $message =  $fullName . '. You have  been offered provisional  admission to study  ' . $programme_name . ' ' . $user->department->department_name . ' at WUFEDPOLY. Kindly login to your account to generate remita for payment of Acceptance Fees and print your offer. Thanks';
 
         // Separate multiple numbers by comma
 
