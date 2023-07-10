@@ -23,6 +23,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/get-admin-password', [AdminController::class, 'getAdminPassword']);
         Route::post('/update-admin-password', [AdminController::class, 'updateAdminPassword']);
         Route::get('/get-applicants', [AdminController::class, 'getApplicants']);
+        Route::get('/shortlisted-applicants', [ApplicantController::class, 'getShortlistedApplicants']);
         Route::post('/recommend', [ApplicantController::class, 'recommend'])->name('recommend');
         Route::get('/recommended-applicants', [ApplicantController::class, 'getRecommendedApplicants'])->name('admin.recommended-applicants');
         Route::post('/drop-applicants', [ApplicantController::class, 'dropRecommendedApplicants'])->name('admin.drop-applicants');
