@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Programme;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('surname');
             $table->string('firstname');
             $table->string('m_name');
-            $table->integer('programme_id');
+            $table->foreignIdFor(Programme::class)->constrained();
             $table->string('email')->unique();
             $table->string('p_number')->unique();
             $table->string('password');

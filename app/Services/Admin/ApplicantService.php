@@ -3,9 +3,11 @@
 namespace App\Services\Admin;
 
 use App\Models\Application;
+use App\Models\Programme;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class ApplicantService.
@@ -50,6 +52,8 @@ class ApplicantService
     public function sendMessage($user)
     {
         $fullName = $user->surname . ' ' . $user->firstname . ' ' . $user->m_name;
+        $programme = User::find($user->account_id)->programme_id;
+        $programme_name = Programme::find($programme)->name;
         // Initialize variables ( set your variables here )
 
         $username = config('services.nigeriabulksms.username');
@@ -58,7 +62,7 @@ class ApplicantService
 
         $sender = config('services.nigeriabulksms.sender');
 
-        $message =  $fullName . '. You have  been offered provisional  admission to study   ' . $user->department->department_name . ' at WUFEDPOLY. Kindly login to your account to generate remita for payment of Acceptance Fees and print your offer. Thanks';
+        $message =  $fullName . '. You have  been offered provisional  admission to study  ' . $programme_name . 'in' . $user->department->department_name . ' at WUFEDPOLY. Kindly login to your account to generate remita for payment of Acceptance Fees and print your offer. Thanks';
 
         // Separate multiple numbers by comma
 
