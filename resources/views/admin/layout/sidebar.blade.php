@@ -7,7 +7,7 @@
             </a>
         </li>
 
-        @if (Auth::guard('admin')->user()->roles->contains('name','superadmin'))
+        @if (Auth::guard('admin')->user()->roles->contains('name', 'superadmin'))
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
                     aria-controls="ui-basic">
@@ -17,9 +17,11 @@
                 </a>
                 <div class="collapse" id="ui-basic">
                     <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"> <a class="nav-link" href="{{ url('admin/recommended-applicants') }}">Shortlist</a>
+                        <li class="nav-item"> <a class="nav-link"
+                                href="{{ url('admin/recommended-applicants') }}">Shortlist</a>
                         </li>
-                        <li class="nav-item"> <a class="nav-link" href="{{ url('#') }}">Drop Candidate</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ url('admin/shortlisted-applicants') }}">Drop
+                                Candidate</a></li>
                         <li class="nav-item"> <a class="nav-link" href="{{ url('#') }}">Bank Details</a></li>
                     </ul>
                 </div>
@@ -42,29 +44,29 @@
                 </div>
             </li>
         @else
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
-                aria-controls="form-elements">
-                <i class="icon-columns menu-icon"></i>
-                <span class="menu-title">Applicants</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="form-elements">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"><a class="nav-link" href="{{ url('admin/dashboard') }}">Not
-                            Recommended
-                        </a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link"
-                            href="{{ url('admin/recommended-applicants') }}">Recommended
-                        </a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Shortlisted
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
+                    aria-controls="form-elements">
+                    <i class="icon-columns menu-icon"></i>
+                    <span class="menu-title">Applicants</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="form-elements">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"><a class="nav-link" href="{{ url('admin/dashboard') }}">Not
+                                Recommended
+                            </a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link"
+                                href="{{ url('admin/recommended-applicants') }}">Recommended
+                            </a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Shortlisted
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
         @endif
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
