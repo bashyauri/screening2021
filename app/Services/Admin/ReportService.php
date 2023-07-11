@@ -2,10 +2,13 @@
 
 namespace App\Services\Admin;
 
+use App\Models\Application;
 use App\Models\Course;
 use App\Models\Department;
+use App\Models\ProposedCourse;
 use App\Services\Admin\Reports\ApplicantsService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpWord\PhpWord;
 
 
@@ -16,6 +19,36 @@ class ReportService
 {
     public function __construct(protected ApplicantsService $applicantService)
     {
+    }
+    public function numberOfApplicants()
+    {
+        if (Auth::guard('admin')->user()->roles->contains('name', 'superadmin')) {
+            return Application::all()->count();
+        }
+        return ProposedCourse::where(['department_id' => Auth::guard('admin')->user()->department_id])->count();
+    }
+    public function numberOfRecommendedApplicants()
+    {
+        if (Auth::guard('admin')->user()->roles->contains('name', 'superadmin')) {
+            return Application::where(['remark' => 'Qualify for Admission'])->count();
+        }
+        return Application::where(['department_id' => Auth::guard('admin')->user()->department_id, 'remark' => 'Qualify for Admission'])->count();
+    }
+    public function numberOfShortlistedApplicants()
+    {
+        if (Auth::guard('admin')->user()->roles->contains('name', 'superadmin')) {
+            return Application::where(['remark' => 'shortlisted'])->count();
+        }
+        return Application::where(['department_id' => Auth::guard('admin')->user()->department_id, 'remark' => 'shortlisted'])->count();
+    }
+    public function applicantsNotRecommended()
+    {
+        if (Auth::guard('admin')->user()->roles->contains('name', 'superadmin')) {
+            return Application::where(['department_id' => 0])->count();
+        }
+        return DB::table('application_form')
+            ->join('proposed_courses', 'application_form.account_id', 'proposed_courses.account_id')
+            ->where(['application_form.department_id' => 0, 'proposed_courses.department_id' => Auth::guard('admin')->user()->department_id])->count();
     }
     public function convertToDocx()
     {

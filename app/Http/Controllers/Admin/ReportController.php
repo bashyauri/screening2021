@@ -28,16 +28,4 @@ class ReportController extends Controller
             return redirect()->back()->with(['error_message' => 'Something went wrong. Please contact CIT.']);
         }
     }
-    public function numberOfApplicants($department = 0)
-    {
-        return ProposedCourse::where(['department_id' => $department])->count();
-    }
-    public function numberOfRecommendedApplicants($department = 0)
-    {
-        return Application::where(['department_id' => $department, 'remark' => 'Qualify for Admission'])->count();
-    }
-    public function numberOfShortlistedApplicants($department = 0)
-    {
-        return Application::where(['department_id' => $department, 'remark' => 'shortlisted'])->count();
-    }
 }

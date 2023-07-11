@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\UpdateAdminPasswordRequest;
 use App\Models\Course;
 use App\Models\Department;
 use App\Services\Admin\Reports\ApplicantsService;
+use App\Services\Admin\ReportService;
 use App\Services\Admin\UpdateAdminDetailsService;
 use App\Services\Admin\UpdateAdminPasswordService;
 use Exception;
@@ -21,18 +22,28 @@ class AdminController extends Controller
 
         protected UpdateAdminDetailsService $updateAdminDetailsService,
         protected UpdateAdminPasswordService $updateAdminPasswordService,
-        protected ApplicantsService $applicants
+        protected ApplicantsService $applicants,
+        protected ReportService $reportService
     ) {
     }
     public function dashboard()
     {
 
         $applicants = $this->applicants->getApplicants();
+        $recommendedApplicants = $this->reportService->numberOfRecommendedApplicants();
+        $totalApplicants = $this->reportService->numberOfApplicants();
+        $applicantsNotRecommended = $this->reportService->applicantsNotRecommended();
+        $totalShortlisted = $this->reportService->numberOfShortlistedApplicants();
+
         $courses = Course::where(['department_id' => Auth::guard('admin')->user()->department_id])->get();
 
 
         $data = array(
+            'recommendedApplicants' => $recommendedApplicants,
             'applicants' => $applicants,
+            'applicantsNotRecommended' => $applicantsNotRecommended,
+            'totalShortlisted' => $totalShortlisted,
+            'totalApplicants' => $totalApplicants,
             'courses' => $courses,
 
         );
