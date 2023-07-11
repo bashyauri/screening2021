@@ -55,7 +55,7 @@
                                 <div class="card-body">
                                     <p class="mb-4">Total Applicants</p>
                                     <p class="fs-30 mb-2">{{ $totalApplicants }}</p>
-                                    <p>10.00% (30 days)</p>
+
                                 </div>
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                                 <div class="card-body">
                                     <p class="mb-4">Total Applicants Recommended</p>
                                     <p class="fs-30 mb-2">{{ $recommendedApplicants }}</p>
-                                    <p>22.00% (30 days)</p>
+
                                 </div>
                             </div>
                         </div>
@@ -75,7 +75,7 @@
                                 <div class="card-body">
                                     <p class="mb-4">Applicants not yet recommended</p>
                                     <p class="fs-30 mb-2">{{ $applicantsNotRecommended }}</p>
-                                    <p>2.00% (30 days)</p>
+
                                 </div>
                             </div>
                         </div>
@@ -84,7 +84,7 @@
                                 <div class="card-body">
                                     <p class="mb-4">Shortlisted Applicants</p>
                                     <p class="fs-30 mb-2">{{ $totalShortlisted }}</p>
-                                    <p>0.22% (30 days)</p>
+
                                 </div>
                             </div>
                         </div>
