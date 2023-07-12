@@ -13,6 +13,5 @@ class TbAccountcreationSeeder extends Seeder
      */
     public function run()
     {
-        User::factory
     }
 }

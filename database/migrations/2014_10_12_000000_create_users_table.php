@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('surname');
             $table->string('firstname');
             $table->string('m_name');
-            $table->foreignIdFor(Programme::class)->constrained();
+            $table->foreignIdFor(Programme::class);
             $table->string('email')->unique();
             $table->string('p_number')->unique();
             $table->string('password');

@@ -46,4 +46,8 @@ class User extends Authenticatable
 
         return $this->hasMany('App\Models\Transaction');
     }
+    public function programme()
+    {
+        return $this->belongsTo(Program::class);
+    }
 }

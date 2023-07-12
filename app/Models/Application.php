@@ -22,6 +22,7 @@ class Application extends Model
     {
         return $this->belongsToMany(ExamGrade::class);
     }
+
     public function department()
     {
         return $this->belongsTo(Department::class);
