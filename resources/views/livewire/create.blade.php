@@ -61,19 +61,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
 
-
-                    <div class="col-lg-4 col-md-4">
-                        <div class="form-group">
-                            @if (!empty($file_name))
-                                File Preview:
-                                <img src="{{ $file_name->temporaryUrl() }}" width="200" height="200">
-                            @endif
-                        </div>
-                    </div>
-
-                </div>
 
                 <div class="bg-dark-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                     <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">

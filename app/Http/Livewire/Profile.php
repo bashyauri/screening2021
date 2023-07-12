@@ -39,6 +39,7 @@ class Profile extends Component
 
     public $selectedState = NULL;
     public $selectedDepartment = NULL;
+
     public $RRR;
     public $transactionId;
     public $programmes;
@@ -60,7 +61,7 @@ class Profile extends Component
     public $passport = null;
     public $fullName;
     public $path;
-    public $applications = '';
+    public $applications;
     public $remainingInstitution;
     public $showDemoNotification = false;
     public $showFailureNotification = false;
@@ -228,6 +229,8 @@ class Profile extends Component
                 'nextkin_name' => $this->kinName,
                 'nextkin_gsm' => $this->kinGsm,
                 'nextkin_address' => $this->kinAddress,
+                'filename' => $validatedData['passport']
+
 
             ];
 
@@ -446,7 +449,7 @@ class Profile extends Component
         $this->institutionName = '';
         $this->certificate =  '';
         $this->startDate =  '';
-        $this->file_name =  '';
+
         $this->endDate = '';
     }
     public function addInstitution()

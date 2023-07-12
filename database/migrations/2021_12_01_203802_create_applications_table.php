@@ -13,9 +13,9 @@ class CreateApplicationsTable extends Migration
      */
     public function up()
     {
-        if(Schema::hasTable('application_form')) return; 
+        if (Schema::hasTable('application_form')) return;
         Schema::create('application_form', function (Blueprint $table) {
-            $table->increments('sN');
+            $table->increments('id');
             $table->string('rrr_code')->unique();
             $table->string('transactionId')->unique();
             $table->string('account_id')->unique();
