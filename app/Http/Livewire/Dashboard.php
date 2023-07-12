@@ -24,15 +24,15 @@ class Dashboard extends Component
         $this->results = Transaction::where('account_id', '=', $this->student->account_id)
             ->where('resource', '=', 'Admission Screening Fees')
             ->where('use_status', '=', '(Not Used)')
-            ->where('amount', '=', '2000')
-           ->where(function ($query) {
+            ->where('amount', '=', '2500')
+            ->where(function ($query) {
                 $query->where('status', '01')
                     ->orWhere('status', '00');
             })->first();
         $this->offer = Transaction::where('account_id', '=', $this->student->account_id)
             ->where('resource', '=', 'Acceptance Fees')
             ->where('use_status', '=', '(Not Used)')
-         ->where(function ($query) {
+            ->where(function ($query) {
                 $query->where('status', '01')
                     ->orWhere('status', '00');
             })->first();
@@ -49,10 +49,8 @@ class Dashboard extends Component
 
         } elseif (!empty($this->isShortListed)) {
             $this->shortList = true;
-
         } elseif (!empty($this->results)) {
             $this->hasPaid = true;
-
         }
         // dd($this->hasPaid);
 
@@ -62,7 +60,6 @@ class Dashboard extends Component
     public function generateInvoice()
     {
         return view('livewire.billing');
-
     }
 
     public function render()
