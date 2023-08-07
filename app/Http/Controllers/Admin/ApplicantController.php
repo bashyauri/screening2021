@@ -104,7 +104,13 @@ class ApplicantController extends Controller
     }
     public function getShortlistedApplicants()
     {
-        $shortlistedApplicants = Application::with('department')->where(['remark' => 'shortlisted'])->orderBy('department_id')->get();
+        if (Auth::guard('admin')->user()->roles->contains('name', 'superadmin')) {
+            $shortlistedApplicants = Application::with('department')->where(['remark' => 'shortlisted'])->orderBy('department_id')->get();
+        } else {
+            $shortlistedApplicants = Application::with('department')
+                ->where(['remark' => 'shortlisted', 'department_id' => Auth::guard('admin')->user()->department_id])
+                ->get();
+        }
         return view('admin.shortlisted-applicants', ['shortlistedApplicants' => $shortlistedApplicants]);
     }
 }
