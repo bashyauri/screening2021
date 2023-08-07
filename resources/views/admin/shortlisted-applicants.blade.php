@@ -64,13 +64,13 @@
                                 </div>
                             @endif
 
-                            @if (Auth::guard('admin')->user()->roles->contains('name', 'admin'))
-                                <a href="{{ url('admin/convert-to-docx') }}" class="btn btn-primary float-right">Export</a>
-                            @endif
-                            <p class="card-title">List of Recommended Applicants</p>
+
+                            <p class="card-title">List of Shortlisted Applicants</p>
 
                             <div class="row">
-
+                                <p><a href="{{ url('admin/download-shortlisted-applicants') }}"
+                                        class="btn btn-primary float-right">Download
+                                        Shortlisted Candidates</a> </p>
                                 <div class="col-12">
                                     <div class="table-responsive">
                                         <table class="display expandable-table" style="width:100%">
@@ -84,7 +84,9 @@
                                                     <th>Phone number</th>
                                                     <th>Remark</th>
                                                     <th>Department</th>
-                                                    <th>Drop</th>
+                                                    @if (Auth::guard('admin')->user()->roles->contains('name', 'superadmin'))
+                                                        <th>Drop</th>
+                                                    @endif
 
 
 
@@ -100,14 +102,14 @@
                                                         <td>{{ $applicant->m_name }}</td>
                                                         <td>{{ $applicant->p_number }}</td>
                                                         <td>{{ $applicant->remark }}</td>
-                                                        <td>{{ $applicant->department?->department_name }}</td>
+                                                        <td>{{ $applicant->department->department_name }}</td>
 
-
-                                                        <td><input type="checkbox" name="drop-applicant"
-                                                                class="drop-checkbox" value="{{ $applicant->account_id }}">
-                                                        </td>
-
-
+                                                        @if (Auth::guard('admin')->user()->roles->contains('name', 'superadmin'))
+                                                            <td><input type="checkbox" name="drop-applicant"
+                                                                    class="drop-checkbox"
+                                                                    value="{{ $applicant->account_id }}">
+                                                            </td>
+                                                        @endif
 
                                                         <td class="message-container"></td>
                                                     </tr>
