@@ -164,4 +164,108 @@ class ReportService
         // Delete the file after it has been downloaded
         unlink($filePath);
     }
+    public function exportShortListedApplicants($shortListedApplicants)
+    {
+
+        /// Assuming you have already initialized the PHPWord object
+        $course = Course::where(['department_id' => Auth::guard('admin')->user()->department_id]);
+
+
+
+        $phpWord = new PhpWord();
+
+        // Create a section
+        $section = $phpWord->addSection();
+
+        $section->setOrientation('landscape');
+
+        // Add an image at the beginning of the page
+        $imagePath = 'assets/img/logos/logo-ct.png';
+        $section->addImage($imagePath, array(
+            'width' => 100,
+            'height' => 100,
+            'align' => 'center'
+        ));
+
+
+        if (Auth::guard('admin')->user()->roles->contains('name', 'admin')) {
+            $department = Department::find(Auth::guard('admin')->user()->department_id);
+            $title = "List of {$department->department_name} Applicants for 2023/2024 academic session";
+        } else {
+            $title = "List of  Shortlisted Applicants for 2023/2024 academic session";
+        }
+
+
+        $section->addText($title, array(
+            'bold' => true,
+            'size' => 14,
+            'align' => 'center',
+            'spaceAfter' => 10 // Adds some space after the title
+        ));
+
+        // Table style
+        $tableStyle = array(
+            'borderColor' => '006699',
+            'borderSize' => 6,
+            'cellMargin' => 50,
+
+        );
+
+        // First row style
+        $firstRowStyle = array('bgColor' => '66BBFF');
+
+        // Add table style
+        $phpWord->addTableStyle('myTable', $tableStyle, $firstRowStyle);
+
+        // Add a table
+        $table = $section->addTable('myTable');
+
+        // Table headers
+        $headerRow = $table->addRow();
+        $headerRow->addCell(500)->addText('#');
+        $headerRow->addCell(1500)->addText('Surname');
+        $headerRow->addCell(1500)->addText('First Name');
+        $headerRow->addCell(1500)->addText('Middle Name');
+        $headerRow->addCell(1500)->addText('Phone number');
+        $headerRow->addCell(1500)->addText('Department Name');
+
+        if ($course->count() > 1) {
+            $headerRow->addCell(1500)->addText('Course');
+        }
+
+
+        $headerRow->addCell(1500)->addText('Remark');
+
+        // Add table data
+        foreach ($shortListedApplicants as $index => $applicant) {
+            $row = $table->addRow();
+            $row->addCell(500)->addText(($index + 1));
+            $row->addCell(1500)->addText($applicant->surname);
+            $row->addCell(1500)->addText($applicant->firstname);
+            $row->addCell(1500)->addText($applicant->m_name);
+            $row->addCell(1500)->addText($applicant->p_number);
+            $row->addCell(1500)->addText($applicant->department->department_name);
+            if ($course->count() > 1) {
+                $row->addCell(1500)->addText($course->first()->course_name);
+            }
+            $row->addCell(1500)->addText($applicant->remark);
+        }
+
+        // Save the PHPWord document
+        $filePath = public_path('storage/document.docx');
+        $phpWord->save($filePath);
+
+        // Set the appropriate headers for file download
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename="document.docx"');
+        header('Content-Length: ' . filesize($filePath));
+
+        // Read and output the file content
+        readfile($filePath);
+
+
+
+        // Delete the file after it has been downloaded
+        unlink($filePath);
+    }
 }
