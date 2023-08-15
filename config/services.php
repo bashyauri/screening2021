@@ -33,6 +33,9 @@ return [
         'username'      => env('NIGERIABULKSMS_USERNAME'),
         'password'      => env('NIGERIABULKSMS_PASSWORD'),
         'sender'        => env('NIGERIABULKSMS_SENDER'),
+    ],
+    'admission' => [
+        'academic_session' => env('ACADEMIC_SESSION')
     ]
 
 ];
