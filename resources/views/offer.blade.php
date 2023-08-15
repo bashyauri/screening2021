@@ -389,7 +389,7 @@
             "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     }
 
-    header h4 {
+    header h5 {
         text-align: center;
     }
 
@@ -442,7 +442,7 @@
         justify-content: space-between;
         align-items: center;
         width: 85%;
-        margin: 10px auto;
+        margin: 5px auto;
     }
 
     .date-div {
@@ -467,7 +467,7 @@
 
     .stamp-div div {
         border: 3px solid black;
-        height: 60px;
+        height: 40px;
         width: 17rem;
     }
 
@@ -484,7 +484,28 @@
         height: 1px;
         width: 17rem;
     }
+
+    @page {
+        size: A3;
+    }
+
+    html {
+        width: 8.5in;
+        height: 11in;
+    }
+
+    @media print {
+        @page {
+            size: A4;
+        }
+
+        body {
+            width: 8.5in;
+            height: 12in;
+        }
+    }
 </style>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -492,7 +513,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="normalize.css">
+
+    {{-- <link rel="stylesheet" href="{{ public_path('css/print.css') }}" media="print"> --}}
 
     <title>provisional offer</title>
 </head>
@@ -503,36 +525,39 @@
             <div class="logo-img"><img src="{{ asset('assets/img/logos/logo.jpg') }}" alt="logo-image" height="100px" />
             </div>
             <div class="logo-text">
-                <h2 class="">WAZIRI UMARU FEDERAL POLYTECHNIC</h2>
-                <h3>OFFICE OF THE REGISTRAR</h3>
-                <h3>(ACADEMIC AFFAIRS DIVISION)</h3>
-                <h3>BIRNIN KEBBI</h3>
+                <h2 class="">WAZIRI UMARU FEDERAL POLYTECHNIC </h2>
+                <h6>OFFICE OF THE REGISTRAR</h6>
+                <h6>(ACADEMIC AFFAIRS DIVISION)</h6>
+                <h6>BIRNIN KEBBI</h6>
             </div>
             <div class="logo-img"> {!! QrCode::size(100)->generate($fullName . ' Remita:' . $rrr) !!}</div>
         </div>
         <div class="address-div">
             <div class="to-div">
 
-                <p>To: <strong>.......{{ strtoupper($fullName) }}.....</strong></p>
+                To: <strong>.......{{ strtoupper($fullName) }}.....</strong>
 
             </div>
             <div class="date-div">
-                <p>Date:<strong>.......{{ date('d/m/Y') }}.....</strong></p>
+                Date:<strong>.......{{ date('d/m/Y') }}.....</strong>
 
             </div>
         </div>
         <section>
             <header>
-                <h4>PROVISIONAL OFFER OF ADMISSION {{ date('Y') - 1 }}/{{ date('Y') }} ACADEMIC SESSION</h4>
+                <h5>PROVISIONAL OFFER OF ADMISSION {{ config('services.admission.academic_session') }} ACADEMIC
+                    SESSION</h5>
             </header>
             <article>
-                <p>This is to inform you that you have being offered provisional offer admission into the</p>
-                <p>Waziri Umaru Federal Polytechnic Birnin Kebbi, Kebbi State to pursue the following:-</p>
+                This is to inform you that you have being offered provisional offer admission into the<br>
+                Waziri Umaru Federal Polytechnic Birnin Kebbi, Kebbi State to pursue the following:-
                 <p><span>Course:</span> {{ $course }}
                 </p>
+
                 <p><span>Department: </span>{{ $department }}
                 </p>
-
+                <p><span>Programme:</span> {{ $programme }}
+                </p>
                 <p><span>Duration:</span> {{ auth()->user()->programme_id == 1 ? 2 : 3 }}
                     years
                 </p>
@@ -545,23 +570,21 @@
                                 evidence
                                 of the qualification on which the offer has been based.
                             </li>
-                            <li>Evidence from a recognized medical practitioner certifying that the candidate is
-                                physically and mentally fit to undergo the prescribed course of study</li>
+                            <li>Evidence of physical and mental fitness from a recognized medical practitioner</li>
                         </ol>
                     </li>
                     <li>If before, during or after registration you are found not having the minimum entry requirement
                         prescribed for your course of study or that the qualifications
-                        you purport to possess are false or incorrect, you will be dismissed and in addition you may be
+                        you purport to possess are false or incorrect, you will be dismissed and may be
                         liable to prosecution.</li>
-                    <li>Except on expectation circumstance, no change of course will be entertained from any student
+                    <li>Except on expectational circumstance, no change of course will be entertained from any student
                         after registration</li>
                     <li>In the absence of any response from you on or before
                         ................................................ it will be assumed that the offer of admission
                         has been rejected by you.</li>
                     <li><span>All prospective students will be required to produce evidence of having paid all fees.
                             (Schedule of fees attached). REFUND OF FEES PAID WILL NOT BE ENTERTAINED PLEASE!</span></li>
-                    <li><span>Please note that the polytechnic will not be responsible for your feeding and
-                            accommodation.</span></li>
+
                     <li>Students admitted into the polytechnic are expected to promote the best interest of the
                         institution and abide by its rules and regulations.</li>
                 </ol>
@@ -569,14 +592,15 @@
                 <footer>
                     <div class="stamp-div">
                         <div><img src="{{ asset('assets/img/logos/stamped.png') }}" alt="stamped-image"
-                                height="50px" />
+                                height="40px" />
                         </div>
-                        <p>Official Stamp</p>
+                        <br>
+                        Official Stamp
                     </div>
                     <div class="sign-div">
-                        <img src="{{ asset('assets/img/logos/acad_sign.png') }}" alt="stamped-image" height="50px" />
-                        <div></div>
-                        <p>For Registrar</p>
+                        <img src="{{ asset('assets/img/logos/acad_sign.png') }}" alt="stamped-image" height="40px" />
+
+                        <br>For Registrar
                     </div>
                 </footer>
             </article>

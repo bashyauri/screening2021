@@ -1,0 +1,16 @@
+/* print.css */
+
+/* Apply 70% scaling for all content */
+body {
+    transform: scale(0.7);
+    transform-origin: top left;
+}
+
+/* Adjust some specific elements if needed */
+header h4,
+article {
+    font-size: 70%; /* Adjust font size if necessary */
+    line-height: 1.05rem; /* Adjust line height if necessary */
+}
+
+/* ... (adjust other elements if necessary) ... */

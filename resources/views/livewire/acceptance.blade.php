@@ -121,27 +121,7 @@
                             </tbody>
                         </table>
                     </form>
-                    <script type="text/javascript">
-                        function PrintElem(elem) {
-                            //Popup($(elem).html());
-                            //var d = $('#' + elem).html();
-                            Popup($('#' + elem).html());
-                        }
 
-                        function Popup(data) {
-                            var mywindow = window.open('', 'new div', 'height=500,width=800');
-                            mywindow.document.write('<html><head><title></title>');
-                            //mywindow.document.write("<link rel=\"stylesheet\" href=\"style.css\" type=\"text/css\" media=\"all\"/>");
-                            mywindow.document.write('</head><body >');
-                            mywindow.document.write(data);
-                            mywindow.document.write('</body></html>');
-
-                            mywindow.print();
-                            mywindow.close();
-
-                            return true;
-                        }
-                    </script>
                 </div>
             </div>
         </div>
