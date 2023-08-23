@@ -48,9 +48,9 @@ class createAdminCommand extends Command
         $admin['email'] = $this->ask("Email of the admin User");
         $admin['password'] = $this->secret("Password of the admin User");
 
-        $roleName = $this->choice("Role of the new User",['admin','superadmin'],'admin');
-        $role = Role::where(['name'=>$roleName])->first();
-        if(!$role){
+        $roleName = $this->choice("Role of the new User", ['admin', 'superadmin'], 'admin');
+        $role = Role::where(['name' => $roleName])->first();
+        if (!$role) {
             $this->error("Role Not found");
             return -1;
         }
@@ -58,29 +58,28 @@ class createAdminCommand extends Command
         $departmentName = $this->choice("Department of the new User", $departments);
         $department = Department::where(['department_name' => $departmentName])->first();
 
-        if(!$department){
+        if (!$department) {
             $this->error("Department Not found");
             return -1;
         }
 
 
-        $validator = Validator::make($admin,[
-            'name' => ['required','string','max:255'],
-            'email' => ['required','string','email','unique:'.Admin::class,'max:255'],
-            'password' => ['required',Password::defaults()],
+        $validator = Validator::make($admin, [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'unique:' . Admin::class, 'max:255'],
+            'password' => ['required', Password::defaults()],
         ]);
-        if($validator->fails()){
-            foreach ($validator->errors()->all() as $error){
+        if ($validator->fails()) {
+            foreach ($validator->errors()->all() as $error) {
                 $this->error($error);
             }
             return -1;
         }
 
-        DB::transaction(function() use($admin,$role){
+        DB::transaction(function () use ($admin, $role, $department) {
             $admin['password'] = Hash::make($admin['password']);
+            $admin['department_id'] = $department->id;
             Admin::create($admin)->roles()->attach($role->id);
-
-
         });
 
         $this->info("Admin User {$admin['email']} created successfully");

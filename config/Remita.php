@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by IntelliJ IDEA.
  * User: NCJoes
@@ -8,12 +9,13 @@
 
 return [
     'MERCHANTID' => getenv('MERCHANTID'),
-    'GATEWAYURL' =>getenv('GATEWAYURL'),
+    'GATEWAYURL' => getenv('GATEWAYURL'),
     "SERVICETYPEID" => getenv('SERVICETYPEID'),
     "ACCEPTANCEID" => getenv('ACCEPTANCEID'),
     "APIKEY" => getenv('APIKEY'),
-    "PATH" => 'http://'.$_SERVER['HTTP_HOST'],
+    "SCREENING_FEES" => getenv('SCREENING_FEES'),
+    "PATH" => 'http://' . $_SERVER['HTTP_HOST'],
     "CHECKSTATUSURL" => getenv('CHECKSTATUSURL'),
     "DESCRIPTION" => getenv('DESCRIPTION'),
-   
+
 ];
