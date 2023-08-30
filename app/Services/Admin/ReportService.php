@@ -7,6 +7,7 @@ use App\Models\Course;
 use App\Models\Department;
 use App\Models\ProposedCourse;
 use App\Services\Admin\Reports\ApplicantsService;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpWord\PhpWord;
@@ -267,5 +268,10 @@ class ReportService
 
         // Delete the file after it has been downloaded
         unlink($filePath);
+    }
+    public function generatePDF()
+    {
+        $recommendedApplicants = $this->applicantService->getRecommendedApplicants();
+        return $recommendedApplicants;
     }
 }

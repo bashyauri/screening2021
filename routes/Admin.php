@@ -28,12 +28,12 @@ Route::prefix('admin')->group(function () {
         Route::get('/recommended-applicants', [ApplicantController::class, 'getRecommendedApplicants'])->name('admin.recommended-applicants');
         Route::post('/drop-applicants', [ApplicantController::class, 'dropRecommendedApplicants'])->name('admin.drop-applicants');
         Route::post('/shortlist-applicants', [ApplicantController::class, 'shortlistApplicants']);
-        Route::get('/convert-to-docx', [ReportController::class, 'exportToDocx']);
+        // Route::get('/convert-to-docx', [ReportController::class, 'exportToDocx']);
         Route::get('/search-course-applicants', [ApplicantController::class, 'searchCourseApplicants']);
         Route::get('/search-recommended-applicants-course', [ApplicantController::class, 'searchRecommendedApplicantsCourse']);
         Route::get('/search-recommended-by-department', [ApplicantController::class, 'searchRecommendedApplicantsDepartment']);
         Route::get('/download-shortlisted-applicants', [ReportController::class, 'exportShortlistedApplicants']);
-
+        Route::get('/export-recommended-pdf', [ReportController::class, 'exportRecommendedApplicants']);
 
         Route::get('/logout', [AdminLogoutController::class, 'logout']);
     });

@@ -49,7 +49,8 @@
                         @endif
 
                         @if (Auth::guard('admin')->user()->roles->contains('name', 'admin'))
-                            <a href="{{ url('admin/convert-to-docx') }}" class="btn btn-primary float-right">Export</a>
+                            <a href="{{ url('admin/export-recommended-pdf') }}"
+                                class="btn btn-primary float-right">Export</a>
                         @endif
                         <p class="card-title">List of Recommended Applicants</p>
 

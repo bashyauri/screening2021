@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6 grid-margin stretch-card">
+                {{-- <div class="col-md-6 grid-margin stretch-card">
                     <div class="card tale-bg">
                         <div class="card-people mt-auto">
                             <img src="images/dashboard/people.svg" alt="people">
@@ -40,14 +40,14 @@
                                         <h2 class="mb-0 font-weight-normal"><i class="icon-sun mr-2"></i>31<sup>C</sup></h2>
                                     </div>
                                     <div class="ml-2">
-                                        <h4 class="location font-weight-normal">Bangalore</h4>
-                                        <h6 class="font-weight-normal">India</h6>
+                                        <h4 class="location font-weight-normal">Kebbi</h4>
+                                        <h6 class="font-weight-normal">Nigeria</h6>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="col-md-6 grid-margin transparent">
                     <div class="row">
                         <div class="col-md-6 mb-4 stretch-card transparent">
@@ -100,7 +100,8 @@
                             <div class="card-body">
                                 <h4 class="card-title">Search Course</h4>
                                 <p class="card-description">
-                                    Use the <code>.form-inline</code> class to display a series of labels, form controls,
+                                    Use the <code>.form-inline</code> class to display a series of labels, form
+                                    controls,
                                     and buttons on a single horizontal row
                                 </p>
                                 <form class="form-inline">
@@ -108,7 +109,8 @@
                                     <select class="form-control mb-6 mr-sm-4" name="courseId" id="course_id">
                                         <option value="" selected>Select Courses</option>
                                         @foreach ($courses as $course)
-                                            <option value="{{ $course->id }}">{{ $course->course_name }}</option>
+                                            <option value="{{ $course->id }}">{{ $course->course_name }}
+                                            </option>
                                         @endforeach
 
                                     </select>
@@ -211,7 +213,8 @@
                                                                     <div class="col mb-4 mb-lg-0 stretch-card transparent">
                                                                         <div class="card card-light-blue">
                                                                             <div class="card-body">
-                                                                                <p class="card-title text-white">SSCE
+                                                                                <p class="card-title text-white">
+                                                                                    SSCE
                                                                                     Details
                                                                                 </p>
                                                                                 @php
@@ -240,7 +243,8 @@
                                                                         <option value="">choose</option>
                                                                         <option value="merit">merit</option>
                                                                         <option value="elds">elds</option>
-                                                                        <option value="catchment area">catchment area
+                                                                        <option value="catchment area">
+                                                                            catchment area
                                                                         </option>
                                                                     </select>
                                                                 </div>
