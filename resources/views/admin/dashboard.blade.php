@@ -241,10 +241,10 @@
                                                                     <p>Select Criteria</p>
                                                                     <select name="criteria" class="criteria" required>
                                                                         <option value="">choose</option>
-                                                                        <option value="merit">merit</option>
-                                                                        <option value="elds">elds</option>
-                                                                        <option value="catchment area">
-                                                                            catchment area
+                                                                        <option value="Merit">Merit</option>
+                                                                        <option value="ELDS">ELDS</option>
+                                                                        <option value="Catchment area">
+                                                                            Catchment area
                                                                         </option>
                                                                     </select>
                                                                 </div>
