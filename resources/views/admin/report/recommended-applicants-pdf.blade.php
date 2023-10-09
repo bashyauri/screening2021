@@ -49,7 +49,7 @@
 
 
 
-    <h4 align="center"> Recommend List for {{ $department->department_name }}
+    <h4 align="center"> Recommended List for {{ $department->department_name }}
         {{ config('services.admission.academic_session') }}
     </h4>
 
@@ -66,7 +66,7 @@
             @endif
 
 
-            <th scope="col">Recom</th>
+            <th scope="col">Criteria</th>
             <th scope="col">Remark</th>
 
         </tr>

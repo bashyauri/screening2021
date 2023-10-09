@@ -26,7 +26,7 @@ class RecommendApplicantRequest extends FormRequest
         return [
             'accountId' => 'required',
             'criteria' => 'required',
-            'comment' => 'nullable'
+            'comments' => 'nullable'
         ];
     }
 }
