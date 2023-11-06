@@ -170,9 +170,12 @@
 
                                 <div class="row">
 
+
+
+
                                     <div class="col-12">
                                         <div class="table-responsive">
-                                            <table class="display expandable-table" style="width:100%">
+                                            <table id="example" class="table display expandable-table">
                                                 <thead>
                                                     <tr>
                                                         <th>Surname</th>
@@ -205,7 +208,7 @@
 
 
 
-                                                        <tr class="hidden-row">
+                                                        <tr class="hidden-row exclude-from-datatable">
 
                                                             <td colspan="5">
                                                                 <div class="row message-container"></div>
@@ -225,7 +228,7 @@
                                                                                         @foreach ($gradeRow as $exam_grade)
                                                                                             <div class="col-md-6">
                                                                                                 <p class="mb-2">
-                                                                                                    {{ $exam_grade->exam_name . '--->' . $exam_grade->subject_name . ' ' . $exam_grade->grade }}
+                                                                                                    {{ $exam_grade->exam_name . '--->' . Str::substr($exam_grade->subject_name, 0, 3) . ' ' . $exam_grade->grade }}
                                                                                                 </p>
                                                                                             </div>
                                                                                         @endforeach
@@ -237,7 +240,7 @@
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                <div class="col mb-4 mb-lg-0">
+                                                                <div class="col">
                                                                     <p>Select Criteria</p>
                                                                     <select name="criteria" class="criteria" required>
                                                                         <option value="">choose</option>
@@ -250,14 +253,14 @@
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                <div class="col mb-4 mb-lg-0">
+                                                                <div class="col">
                                                                     <p>Comments</p>
                                                                     <input type="text" name="comments"
                                                                         class="comments">
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                <div class="col mb-4 mb-lg-0">
+                                                                <div class="col">
                                                                     <p>Recommend</p>
                                                                     <input type="checkbox" name="recommend"
                                                                         class="recommend-checkbox"

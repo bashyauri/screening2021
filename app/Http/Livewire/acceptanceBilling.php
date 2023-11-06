@@ -23,6 +23,7 @@ class acceptanceBilling extends Component
 
     public function mount()
     {
+
         $transcId = substr(md5(uniqid(rand(), true)), 0, 4);
         $tran = strtoupper($transcId);
 
@@ -32,8 +33,8 @@ class acceptanceBilling extends Component
         $this->date = DATE("d/m/Y");
         $this->transactionId = strtoupper($transcId);
         $this->status = '00';
-        $this->amount = '7000';
-        $this->session = ' 2022/2023';
+        $this->amount = 9000;
+        $this->session = ' 2023/2024';
         $this->results = Transaction::where([
             'account_id' => $this->student->account_id,
             'resource' => 'Acceptance Fees',

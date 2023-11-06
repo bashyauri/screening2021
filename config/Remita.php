@@ -17,5 +17,6 @@ return [
     "PATH" => 'http://' . $_SERVER['HTTP_HOST'],
     "CHECKSTATUSURL" => getenv('CHECKSTATUSURL'),
     "DESCRIPTION" => getenv('DESCRIPTION'),
+    "ACCEPTANCE_FEES" => getenv('ACCEPTANCE_FEES'),
 
 ];

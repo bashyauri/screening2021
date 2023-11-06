@@ -504,6 +504,26 @@
             height: 12in;
         }
     }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th,
+    td {
+        padding: 8px;
+        text-align: left;
+        border: 1px solid #dddddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .fees-header {
+        page-break-after: always;
+    }
 </style>
 
 <!DOCTYPE html>
@@ -608,6 +628,42 @@
     </div>
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <div class="fees-header">
+    </div>
+    <h1>Schedule Fees</h1>
+    <hr>
+    @if ($scheduleFees)
+        <table>
+            <thead>
+                <tr>
+                    <th>Fee Name</th>
+                    <th>Amount (₦)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @php
+                    $totalFees = 0;
+                @endphp
+                @foreach ($scheduleFees as $feeName => $feeAmount)
+                    @php
+
+                        $feeName = preg_replace('/_/', ' ', strtoupper($feeName));
+                        $totalFees += $feeAmount;
+
+                    @endphp
+                    <tr>
+
+                        <td>{{ $feeName }}</td>
+                        <td>{{ $feeAmount }}</td>
+                    </tr>
+                @endforeach
+                <tr>
+                    <td><strong>TOTAL</strong></td>
+                    <td><strong>{{ $totalFees }}</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    @endif
 </body>
 <script>
     window.print();
