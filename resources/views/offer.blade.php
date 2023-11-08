@@ -654,12 +654,12 @@
                     <tr>
 
                         <td>{{ $feeName }}</td>
-                        <td>{{ $feeAmount }}</td>
+                        <td>{{ number_format($feeAmount, 2, '.', ',') }}</td>
                     </tr>
                 @endforeach
                 <tr>
                     <td><strong>TOTAL</strong></td>
-                    <td><strong>{{ $totalFees }}</strong></td>
+                    <td><strong>{{ number_format($totalFees, 2, '.', ',') }}</strong></td>
                 </tr>
             </tbody>
         </table>
