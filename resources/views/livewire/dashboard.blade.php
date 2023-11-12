@@ -41,6 +41,13 @@
             @if ($hasOffer)
                 <div class="col-lg-5">
                     <div class="card h-100 p-3">
+                        @if (session('status'))
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <strong> {{ session('status') }}!</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                        @endif
                         <div class="overflow-hidden position-relative border-radius-lg bg-cover h-100">
                             <span class="mask bg-gradient-success"></span>
                             <div class="card-body position-relative z-index-1 d-flex flex-column h-100 p-3">

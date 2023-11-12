@@ -16,20 +16,11 @@ use App\Models\ProposedCourse;
 use App\Models\Course;
 use App\Models\Transaction;
 use App\Models\Department;
+use App\Services\SchoolFees;
 
 class PrintForm extends Controller
 {
-    private function scheduleFees($departmentId)
-    {
 
-        if (in_array($departmentId, config('services.schoolfees.scienceDepartments'))) {
-
-            return config('services.schoolfees.sciences');
-        } else if (in_array($departmentId, config('services.schoolfees.socialScienceDepartments'))) {
-
-            return config('services.schoolfees.socialSciences');
-        }
-    }
 
     public function printForm()
     {
@@ -156,16 +147,16 @@ class PrintForm extends Controller
                 'course' => $courses->course_name,
                 'department' => $departments->department_name,
                 'passport' => $applicationDetails->filename,
-                'scheduleFees' =>  $this->scheduleFees($departments->id),
+                'scheduleFees' =>  SchoolFees::department($departments->id),
 
 
             );
 
 
             return view('offer')->with($data);
-        } else {
-            return Redirect('dashboard');
         }
+
+        return redirect('dashboard')->with('status', 'It appears you made some corrections and forget to submit. Please submit your form and try again.');
     }
     //
 
