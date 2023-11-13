@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\TransactionStatus;
 use Illuminate\Http\Request;
 use Livewire\Redirector;
 use App\Models\Status;
@@ -17,6 +18,7 @@ use App\Models\Course;
 use App\Models\Transaction;
 use App\Models\Department;
 use App\Services\SchoolFees;
+
 
 class PrintForm extends Controller
 {
@@ -38,8 +40,8 @@ class PrintForm extends Controller
             ->where('resource', '=', 'Admission Screening Fees')
             ->where('use_status', '=', '(Not Used)')
             ->where(function ($query) {
-                $query->where('status', '01')
-                    ->orWhere('status', '00');
+                $query->where('status', TransactionStatus::ACTIVATED)
+                    ->orWhere('status', TransactionStatus::APPROVED);
             })->first();
 
 
@@ -111,8 +113,8 @@ class PrintForm extends Controller
             ->where('resource', '=', 'Acceptance Fees')
             ->where('use_status', '=', '(Not Used)')
             ->where(function ($query) {
-                $query->where('status', '01')
-                    ->orWhere('status', '00');
+                $query->where('status', TransactionStatus::ACTIVATED)
+                    ->orWhere('status', TransactionStatus::APPROVED);
             })->first();
 
         if ($statuses->status == 6 && $transaction != null) {
