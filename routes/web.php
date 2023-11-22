@@ -6,6 +6,7 @@ use App\Http\Controllers\PrintForm;
 use App\Http\Controllers\QRCodeController;
 use App\Http\Controllers\RemitaController;
 use App\Http\Livewire\acceptanceBilling;
+use App\Http\Livewire\Auth\EditUser;
 use App\Http\Livewire\Auth\ForgotPassword;
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Auth\ResetPassword;
@@ -45,6 +46,7 @@ Route::get('/reset-password/{id}', ResetPassword::class)->name('reset-password')
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
+    Route::get('/edit/user', EditUser::class)->name('edit-user');
     //Route::get('printForm', PrintForm::class)->name('printForm');
 
     Route::get('/billing', Billing::class)->name('billing');
